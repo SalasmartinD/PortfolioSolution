@@ -1,0 +1,13 @@
+# Archivos de .NET y Visual Studio Code/Visual Studio
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.vs/
+
+# Paquetes NuGet
+*.nupkg
+.vs/
+
+# Archivos de configuración local (CRÍTICO para la seguridad)
+appsettings.Development.json

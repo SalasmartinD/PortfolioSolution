@@ -1,0 +1,54 @@
+@* 📄 Portfolio.Client/Pages/Projects.razor *@
+@page "/projects"
+@using Portfolio.Shared.Models 
+@using Portfolio.Client.Components
+@inject HttpClient Http 
+
+<div class="container py-5">
+    <h3 class="display-5 fw-bold mb- border-bottom pb-2 text-primary">
+        <i class="fas fa-code me-2"></i> Mis Proyectos Destacados
+    </h3>
+    <p class="lead text-muted">
+        Estos proyectos demuestran mi experiencia en el desarrollo de aplicaciones robustas implementando buenas practicas.
+    </p>
+    
+    @if (projects == null)
+    {
+        <p class="lead text-muted">
+        Cargando proyectos...
+        </p>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3"> 
+            @foreach (var project in projects)
+            {
+                <ProjectCard Project="@project" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<Project>? projects;
+
+    // Método que se ejecuta al iniciar el componente
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // La URL DEBE COINCIDIR con el puerto en el que corre Portfolio.Api
+            // Por defecto, Visual Studio asigna 5xxx o 7xxx. Ajusta este puerto si es necesario.
+            // Para fines de prueba local, usa la URL directa del API.
+            var apiUrl = "https://localhost:7208/api/Projects"; // Ajusta el puerto aquí si es diferente
+
+            projects = await Http.GetFromJsonAsync<List<Project>>(apiUrl);
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores (por ejemplo, si el API no está corriendo)
+            Console.WriteLine($"Error al obtener proyectos: {ex.Message}");
+            projects = new List<Project>(); // Inicializar vacío para evitar el error de Nulo
+        }
+    }
+}

@@ -1,0 +1,161 @@
+@* 📄 Portfolio.Client/Pages/Index.razor *@
+@page "/"
+@using Portfolio.Client.Components
+@using Portfolio.Shared.Models
+@inject IJSRuntime JSRuntime
+
+
+<div class="container-fluid min-vh-100 d-flex pt-5">
+    
+    <div class="row w-100"> 
+
+        <div class="col-lg-5 col-xl-4 sidebar-sticky-left d-flex flex-column p-5">
+            
+            <header class="mb-5">
+                <h1 class="display-3 fw-bold text-light mb-3">Salas Martín Daniel</h1>
+                <h2 class="fs-4 fw-light text-primary mb-4">Estudiante de Ingeniería en Informática – UNLaM</h2>
+                
+                <p class="lead text-muted mb-5">
+                    Apasionado por el desarrollo de software y la innovación tecnológica. Construyendo el futuro, un código a la vez.
+                </p>
+            </header>
+            
+            <nav class="nav flex-column mb-5 d-none d-lg-block pl-15"> 
+
+                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#about">
+                    <span class="me-3 text-secondary">—</span> Sobre Mí
+                </a>
+                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#experience">
+                    <span class="me-3 text-secondary">—</span> EXPERIENCIA
+                </a>
+                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#projects">
+                    <span class="me-3 text-secondary">—</span> Proyectos
+                </a>
+                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#contact">
+                    <span class="me-3 text-secondary">—</span> Contacto
+                </a>
+            </nav>
+            
+            <footer class="mt-auto pb-5">
+                </footer>
+        </div>
+
+        <div class="col-lg-7 offset-lg-5 col-xl-8 offset-xl-4 pt-5 px-5">
+            
+            <section id="about" class="py-5">
+                <h2 class="display-5 fw-bold text-light mb-5 text-center">
+                    Sobre Mí
+                </h2>
+                <p class="text-white-50 mb-4 fs-5">
+                    ¡Hola! Soy Martín Salas, estudiante de tercer año de Ingeniería en Informática en la Universidad Nacional de La Matanza (UNLaM). Cuento con una sólida base en programación, matemáticas y redes.
+                </p>
+                <p class="text-white-50 mb-4 fs-5">
+                    Me apasiona el mundo del desarrollo de software, los lenguajes de programación y la seguridad del software. Combino conocimientos técnicos con creatividad para desarrollar soluciones y proyectos prácticos.
+                </p>
+                <p class="text-white-50 mb-4 fs-5">
+                    Actualmente estoy en búsqueda de mi primera experiencia profesional para poder crecer como developer y aportar valor real a proyectos desafiantes que me permitan expandir mis conocimientos y habilidades.
+                </p>
+            </section>
+
+            <section id="about-content" class="py-5">
+    </section>
+        
+<hr class="my-5 border-secondary" />
+
+<section id="experience" class="py-5">
+    
+    <h2 class="display-6 fw-bold text-primary mb-5 text-center">Educación y Experiencia</h2>
+
+    <div class="card bg-transparent border-0 mb-4">
+        <div class="card-body p-0">
+            <h5 class="fw-bold text-light mb-1">Desarrollador freelance</h5>
+            <h6 class="text-secondary small mb-2">2024 - Presente</h6>
+            <p class="text-muted">
+                Desarrollar aplicaciones de forma individual y en equipo que cumplan con los requisitos del cliente y sean sostenibles en el tiempo implementando buenas practicas y utilizando tecnologías actualizadas.
+            </p>
+            <div class="mt-2">
+                <span class="badge bg-secondary text-light me-1">C#</span>
+                <span class="badge bg-secondary text-light">.NET Core</span>
+                <span class="badge bg-secondary text-light">SQL Server</span>
+                <span class="badge bg-secondary text-light">GitHub</span>
+                <span class="badge bg-secondary text-light">Git</span>
+                <span class="badge bg-secondary text-light">MongoDB</span>
+            </div>
+        </div>
+    </div>
+
+        <div class="card bg-transparent border-0 mb-4">
+        <div class="card-body p-0">
+            <h5 class="fw-bold text-light mb-1">Soporte IT</h5>
+            <h6 class="text-secondary small mb-2">Diagnostico y reparacion de Hardware/Software | 2022 – Presente</h6>
+            <p class="text-muted">
+                Estudiante avanzado enfocado en desarrollo de software, algoritmos y estructuras de datos. Sólida base en lenguajes de programación modernos, seguridad y redes.
+            </p>
+            <div class="mt-2">
+                <span class="badge bg-secondary text-light">Redes</span>
+                <span class="badge bg-secondary text-light">Hardware y Software</span>
+                <span class="badge bg-secondary text-light">Diagnóstico y resolución de incidencias</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-transparent border-0 mb-4">
+        <div class="card-body p-0">
+            <h5 class="fw-bold text-light mb-1">Universidad Nacional de La Matanza (UNLaM)</h5>
+            <h6 class="text-secondary small mb-2">Ingeniería en Informática | 2023 – Presente</h6>
+            <p class="text-muted">
+                Estudiante avanzado enfocado en desarrollo de software, algoritmos y estructuras de datos. Sólida base en lenguajes de programación modernos, seguridad y redes.
+            </p>
+            <div class="mt-2">
+                <span class="badge bg-secondary text-light">Packet Tracer</span>
+                <span class="badge bg-secondary text-light">Python</span>
+                <span class="badge bg-secondary text-light">C</span>
+            </div>
+        </div>
+    </div>
+
+</section>
+            
+            <hr class="my-5 border-secondary" />
+
+            <section id="projects" class="py-5">
+                <ProjectsList />
+            </section>
+
+            <hr class="my-5 border-secondary" />
+
+            <section id="contact" class="py-5 min-vh-100">
+                
+                <h2 class="display-5 fw-bold text-light mb-5 text-center">
+                    Contacto
+                </h2>
+
+                <div class="row justify-content-center">
+
+                    <div class="col-12 col-lg-5 mx-auto mb-4">
+                        <ContactLinks />
+                    </div>
+
+                    <div class="col-12 col-lg-7 mx-auto mb-4">
+                        <div class="card border-0 p-3 bg-dark"> 
+                            <ContactForm /> 
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+        
+    </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Ejecutar el script JS una vez que el componente se haya renderizado
+            await JSRuntime.InvokeVoidAsync("setupCursorHalo");
+        }
+    }
+}

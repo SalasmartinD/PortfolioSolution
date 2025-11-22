@@ -1,0 +1,91 @@
+@* 📄 Fragmento de Portfolio.Client/Components/ContactForm.razor *@
+@using System.ComponentModel.DataAnnotations 
+@using Microsoft.AspNetCore.Components.Forms
+@using Portfolio.Shared.Models
+@inject HttpClient Http // Necesitas HttpClient para la llamada
+
+<EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+    
+    <div class="mb-3">
+        <label for="name" class="form-label text-muted">Nombre</label>
+        <InputText id="name" @bind-Value="model.Name" class="form-control bg-dark text-light border-secondary" placeholder="Tu nombre" />
+        <ValidationMessage For="@(() => model.Name)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label text-muted">Email</label>
+        <InputText id="email" @bind-Value="model.Email" class="form-control bg-dark text-light border-secondary" placeholder="tu@email.com" />
+        <ValidationMessage For="@(() => model.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="subject" class="form-label text-muted">Asunto</label>
+        <InputText id="subject" @bind-Value="model.Subject" class="form-control bg-dark text-light border-secondary" placeholder="¿De qué se trata?" />
+        <ValidationMessage For="@(() => model.Subject)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="message" class="form-label text-muted">Mensaje</label>
+        <InputTextArea id="message" @bind-Value="model.Message" rows="5" class="form-control bg-dark text-light border-secondary" placeholder="Cuéntame sobre tu proyecto o consulta..." />
+        <ValidationMessage For="@(() => model.Message)" />
+    </div>
+    
+    <DataAnnotationsValidator /> 
+
+    <button type="submit" class="btn btn-lg w-100 text-white mt-3" 
+            style="background-image: linear-gradient(to right, #00C6FF 0%, #0072FF 100%); border: none;">
+        @if (IsLoading)
+        {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
+        else
+        {
+            <i class="fas fa-paper-plane me-2"></i>
+        }
+    </button>
+    
+    @if (!string.IsNullOrWhiteSpace(StatusMessage))
+    {
+        <div class="alert alert-info mt-3">@StatusMessage</div>
+    }
+
+</EditForm>
+
+@code {
+    // Usamos el modelo ContactMessage compartido
+    private ContactMessage model = new ContactMessage();
+    private string StatusMessage = "";
+    private bool IsLoading = false;
+
+    private async Task HandleValidSubmit()
+    {
+        IsLoading = true;
+        StatusMessage = "";
+        
+        try
+        {
+            var apiUrl = "https://localhost:7208/api/Contact"; // Ajusta el puerto HTTP/HTTPS según corresponda
+            
+            var response = await Http.PostAsJsonAsync(apiUrl, model);
+
+            if (response.IsSuccessStatusCode)
+            {
+                StatusMessage = "✅ ¡Mensaje enviado con éxito! Te responderé pronto.";
+                model = new ContactMessage(); // Limpia el formulario
+            }
+            else
+            {
+                // Manejo de errores del servidor (ej. error 500)
+                StatusMessage = $"❌ Error al enviar. Código: {response.StatusCode}";
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"❌ Error de conexión: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}

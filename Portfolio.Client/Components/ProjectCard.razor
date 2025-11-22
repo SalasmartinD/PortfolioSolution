@@ -1,0 +1,57 @@
+@* 📄 Portfolio.Client/Components/ProjectCard.razor *@
+@using Portfolio.Shared.Models
+
+<div class="col">
+    <div class="card shadow-lg border-@GetCardColor(Project.Title)" 
+         style="background-color: #F8F9FA !important;">
+        <div class="card-body d-flex flex-column">
+            
+            <h5 class="card-title text-primary">
+                <i class="fas fa-folder me-2"></i> @Project.Title
+            </h5>
+            
+            <p class="card-text flex-grow-1 text-dark overflow-auto project-description">@Project.ShortDescription</p>
+            
+            <h6 class="mt-3 text-dark">Tecnologías Clave:</h6>
+            <div class="mt-auto project-technologies d-flex flex-wrap gap-2">
+                @* Usamos bg-secondary (Fondo Gris Oscuro) y lo combinamos con text-light (Letra Blanca/Clara) *@
+                @if (!string.IsNullOrEmpty(Project.Technologies))
+                {
+                    @foreach (var tech in Project.Technologies.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <span class="badge bg-secondary text-light me-1 mb-1">@tech.Trim()</span> 
+                    }
+                }
+            </div>
+        </div>
+        
+        <div class="card-footer bg-light border-top d-grid gap-2 p-3">
+            
+            <a href="@Project.GitHubUrl" target="_blank" class="btn btn-sm btn-dark me-2">
+                <i class="fab fa-github"></i> Código Fuente
+            </a>
+            
+            @if (!string.IsNullOrWhiteSpace(Project.LiveDemoUrl))
+            {
+                <a href="@Project.LiveDemoUrl" target="_blank" class="btn btn-sm btn-success">
+                    <i class="fas fa-external-link-alt"></i> Demo
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    // Parámetro para recibir el objeto Project desde la página principal
+    [Parameter]
+    public Project Project { get; set; } = new Project();
+
+    // Función simple para darle un color diferente al borde de cada tarjeta
+    private string GetCardColor(string title)
+    {
+        if (title.Contains("Tareas")) return "danger";
+        if (title.Contains("API")) return "info";
+        if (title.Contains("Portafolio")) return "success";
+        return "secondary";
+    }
+}
