@@ -2,28 +2,30 @@
 
 # ETAPA 1: Construcción (Build)
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-# El directorio de trabajo temporal es /src
 WORKDIR /src
 
-# 💥 CORRECCIÓN DE RUTAS 💥
+# 💥 CORRECCIÓN DE RUTAS: COPIAMOS EL ARCHIVO DE SOLUCIÓN Y LOS PROYECTOS DESDE LA RAÍZ 💥
 
-# Copiar el archivo de solución (.sln)
+# Copiar el archivo de solución (.sln) y el proyecto de la API
 COPY ../PortfolioSolution.sln . 
-
-# Copiar el .csproj del proyecto API
 COPY Portfolio.Api.csproj Portfolio.Api/
 
-# Copiar el .csproj del proyecto SHARED
+# 1. COPIAR LA CARPETA SHARED COMPLETA
+# Usamos la notación 'subir un nivel' (../) para encontrar la carpeta Shared.
 COPY ../Portfolio.Shared/Portfolio.Shared.csproj Portfolio.Shared/
 
+# Copiar el resto de los archivos necesarios para la restauración
+# Esto es esencial, ya que el .sln necesita ver los archivos .csproj para restaurar
+COPY . .
+
 # 2. Restaurar dependencias 
+# Ahora el WORKDIR se mueve a la carpeta API para restaurar (asumiendo que el .csproj de la API es el que tiene las referencias)
+WORKDIR /src/Portfolio.Api
+
 RUN dotnet restore
 
-# 3. Copiar el resto de archivos y publicar
-COPY . .
-WORKDIR "/src/Portfolio.Api"
+# 3. Publicar (Se mantiene igual)
 RUN dotnet publish "Portfolio.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
 # ETAPA 2: Ejecución (Runtime)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
