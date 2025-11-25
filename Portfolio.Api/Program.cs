@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Portfolio.Api.Data; // Para usar DbInitializer y DbContext
 using Swashbuckle.AspNetCore.SwaggerGen; // Necesario para Swagger/OpenAPI
 using Portfolio.Api.Services;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,11 @@ builder.Services.AddTransient<IEmailService, EmailService>();
 
 // CONFIGURACIÓN DE ENTITY FRAMEWORK CORE
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseNpgsql( 
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery) // Práctica de rendimiento recomendada
+    )
+);
 // Configuración de CORS
 builder.Services.AddCors(options =>
 {

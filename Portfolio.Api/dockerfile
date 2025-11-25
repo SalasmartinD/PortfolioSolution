@@ -1,0 +1,33 @@
+# 📄 Portfolio.Api/Dockerfile
+
+# ETAPA 1: Construcción (Build)
+# Usar la imagen SDK de .NET para compilar el código
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copiar el archivo .csproj del proyecto API
+COPY ["Portfolio.Api/Portfolio.Api.csproj", "Portfolio.Api/"]
+# Copiar el archivo .csproj del proyecto Shared
+COPY ["Portfolio.Shared/Portfolio.Shared.csproj", "Portfolio.Shared/"]
+
+# Copiar el archivo de solución y hacer referencia
+COPY . .
+WORKDIR "/src/Portfolio.Api"
+RUN dotnet restore "Portfolio.Api.csproj"
+
+# Construir la aplicación
+RUN dotnet publish "Portfolio.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# ETAPA 2: Ejecución (Runtime)
+# Usar la imagen Runtime de .NET, mucho más pequeña y segura
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+
+# Copiar los archivos publicados de la etapa de construcción
+COPY --from=build /app/publish .
+
+# Exponer el puerto por defecto de ASP.NET Core (Kestrel)
+EXPOSE 8080 
+
+# Comando de inicio: Ejecutar el archivo DLL
+ENTRYPOINT ["dotnet", "Portfolio.Api.dll"]
