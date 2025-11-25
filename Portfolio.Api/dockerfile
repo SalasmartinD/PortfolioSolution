@@ -1,15 +1,19 @@
 # 📄 Dockerfile (En la carpeta Portfolio.Api/)
 
-# Directorio de trabajo: /src, que simula la raíz de la solución dentro del contenedor
+# ETAPA 1: Construcción (Build)
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# El directorio de trabajo temporal es /src
 WORKDIR /src
 
-# 1. Copiar los archivos .csproj y .sln
-# 💥 CORRECCIÓN DE RUTA: Subimos un nivel (../) para encontrar la solución (.sln) 💥
+# 💥 CORRECCIÓN DE RUTAS 💥
+
+# Copiar el archivo de solución (.sln)
 COPY ../PortfolioSolution.sln . 
-# Copiar el .csproj del proyecto API (Está en el mismo nivel que el Dockerfile)
+
+# Copiar el .csproj del proyecto API
 COPY Portfolio.Api.csproj Portfolio.Api/
-# 💥 CORRECCIÓN DE RUTA: Subimos un nivel (../) para encontrar Portfolio.Shared 💥
+
+# Copiar el .csproj del proyecto SHARED
 COPY ../Portfolio.Shared/Portfolio.Shared.csproj Portfolio.Shared/
 
 # 2. Restaurar dependencias 
@@ -17,7 +21,7 @@ RUN dotnet restore
 
 # 3. Copiar el resto de archivos y publicar
 COPY . .
-WORKDIR /src/Portfolio.Api
+WORKDIR "/src/Portfolio.Api"
 RUN dotnet publish "Portfolio.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # ETAPA 2: Ejecución (Runtime)
