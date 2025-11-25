@@ -4,16 +4,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# 1. Copiar el archivo de solución desde la raíz
-COPY PortfolioSolution.sln .
-
 # 2. Copiar los archivos .csproj usando la ruta desde la raíz
 # Como el contexto es la raíz, copiamos "Portfolio.Api/..." hacia "Portfolio.Api/"
 COPY Portfolio.Api/Portfolio.Api.csproj Portfolio.Api/
 COPY Portfolio.Shared/Portfolio.Shared.csproj Portfolio.Shared/
 
 # 3. Restaurar dependencias
-RUN dotnet restore
+RUN dotnet restore "Portfolio.Api/Portfolio.Api.csproj"
 
 # 4. Copiar todo el código fuente
 COPY . .
