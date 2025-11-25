@@ -8,10 +8,10 @@ namespace Portfolio.Api.Data
     {
         public static void Initialize(PortfolioDbContext context)
         {
-            // 1. Verifica si ya existen proyectos
+            //Verifica si ya existen proyectos
             if (context.Projects.Any())
             {
-                return; // Si ya hay datos, no hace nada y sale.
+                return; // Si hay datos, no hace nada y sale.
             }
 
             // 2. Define tus tres proyectos

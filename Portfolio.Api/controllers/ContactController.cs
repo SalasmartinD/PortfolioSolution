@@ -9,7 +9,7 @@ using Portfolio.Api.Services; // Para IEmailService
 public class ContactController : ControllerBase
 {
     private readonly ILogger<ContactController> _logger;
-    private readonly IEmailService _emailService; // ⬅️ Nueva dependencia
+    private readonly IEmailService _emailService;
 
     // Constructor con la nueva dependencia
     public ContactController(ILogger<ContactController> logger, IEmailService emailService) 
@@ -21,7 +21,7 @@ public class ContactController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // Hacer el método asíncrono para usar await
+
     public async Task<IActionResult> Post([FromBody] ContactMessage message) 
     {
         if (!ModelState.IsValid)

@@ -38,15 +38,13 @@
         try
         {
             // La URL DEBE COINCIDIR con el puerto en el que corre Portfolio.Api
-            // Por defecto, Visual Studio asigna 5xxx o 7xxx. Ajusta este puerto si es necesario.
-            // Para fines de prueba local, usa la URL directa del API.
-            var apiUrl = "https://localhost:7208/api/Projects"; // Ajusta el puerto aquí si es diferente
+            var apiUrl = "https://localhost:7208/api/Projects";
 
             projects = await Http.GetFromJsonAsync<List<Project>>(apiUrl);
         }
         catch (Exception ex)
         {
-            // Manejo de errores (por ejemplo, si el API no está corriendo)
+            // Manejo de errores
             Console.WriteLine($"Error al obtener proyectos: {ex.Message}");
             projects = new List<Project>(); // Inicializar vacío para evitar el error de Nulo
         }

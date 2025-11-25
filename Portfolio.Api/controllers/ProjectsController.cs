@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Shared.Models;
 using Portfolio.Api.Data;
-using Microsoft.EntityFrameworkCore; // ¡Importante para ToListAsync!
+using Microsoft.EntityFrameworkCore;
 
 namespace Portfolio.Api.Controllers
 {
