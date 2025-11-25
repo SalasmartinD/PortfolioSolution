@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "--- INICIANDO INSTALACION .NET ---"
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 8.0 --install-dir .dotnet
+curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 10.0 --install-dir .dotnet
 export DOTNET_ROOT=$(pwd)/.dotnet
 export PATH=$PATH:$DOTNET_ROOT
 
