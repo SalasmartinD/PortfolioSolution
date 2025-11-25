@@ -4,16 +4,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# 1. Copiar los archivos .csproj de la API y SHARED
-# Asumimos que la compilación se inicia desde la raíz de la solución, y la carpeta de la API es 'Portfolio.Api'
-# Copiar el .csproj del proyecto API
-COPY Portfolio.Api/*.csproj Portfolio.Api/
-# Copiar el .csproj del proyecto SHARED
-COPY Portfolio.Shared/*.csproj Portfolio.Shared/
-# Copiar el archivo de solución (.sln)
-COPY PortfolioSolution.sln . 
+# 1. Copiar los archivos .csproj y .sln
+# 💥 CORRECCIÓN DE RUTA: Subimos un nivel (../) para encontrar la solución (.sln) 💥
+COPY ../PortfolioSolution.sln . 
+# Copiar el .csproj del proyecto API (Está en el mismo nivel que el Dockerfile)
+COPY Portfolio.Api.csproj Portfolio.Api/
+# 💥 CORRECCIÓN DE RUTA: Subimos un nivel (../) para encontrar Portfolio.Shared 💥
+COPY ../Portfolio.Shared/Portfolio.Shared.csproj Portfolio.Shared/
 
-# 2. Restaurar dependencias (se ejecutará desde la raíz /src)
+# 2. Restaurar dependencias 
 RUN dotnet restore
 
 # 3. Copiar el resto de archivos y publicar
