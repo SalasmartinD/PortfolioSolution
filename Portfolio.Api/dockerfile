@@ -1,7 +1,7 @@
 # 📄 Dockerfile (Ubicado en Portfolio.Api/)
 
 # ETAPA 1: Construcción
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # 2. Copiar los archivos .csproj usando la ruta desde la raíz
@@ -21,7 +21,7 @@ WORKDIR "/src/Portfolio.Api"
 RUN dotnet publish "Portfolio.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # ETAPA 2: Ejecución
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 8080
