@@ -12,40 +12,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IEmailService, EmailService>();
 
-// --- 1. LÓGICA DE CONEXIÓN A BASE DE DATOS (RENDER vs LOCAL) ---
-// Obtener la cadena por defecto (para desarrollo local en tu PC)
+// 1. OBTENER LA CADENA DE CONEXIÓN
+// Esto leerá automáticamente 'appsettings.json' en tu PC
+// Y leerá automáticamente la variable 'ConnectionStrings__DefaultConnection' en Render
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Intentar obtener la variable automática que Render crea
-var renderDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-
-// Si existe la variable de Render, la procesamos para reemplazar la local
-if (!string.IsNullOrEmpty(renderDbUrl))
-{
-    // Render nos da: postgres://user:password@host:port/database
-    // Npgsql necesita: Host=...;Database=...;Username=...;Password=...
-    try 
-    {
-        var databaseUri = new Uri(renderDbUrl);
-        var userInfo = databaseUri.UserInfo.Split(':');
-
-        connectionString = $"Host={databaseUri.Host};" +
-                           $"Port={databaseUri.Port};" +
-                           $"Database={databaseUri.LocalPath.TrimStart('/')};" +
-                           $"Username={userInfo[0]};" +
-                           $"Password={userInfo[1]};" +
-                           "SSL Mode=Require;Trust Server Certificate=true";
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error parseando DATABASE_URL: {ex.Message}");
-    }
-}
-
-// Configuración de EF Core con la cadena final
+// 2. CONFIGURAR EF CORE
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
     options.UseNpgsql(
-        connectionString,
+        connectionString, // Usamos la cadena directa
         o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
     )
 );
