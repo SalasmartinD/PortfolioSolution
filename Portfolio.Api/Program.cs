@@ -63,6 +63,8 @@ app.UseHttpsRedirection();
 app.UseCors("AllowBlazorClient"); // Aplicar CORS
 app.UseAuthorization();
 
+app.MapGet("/ping", () => "¡Pong! La API está viva y escuchando.");
+
 app.MapControllers(); // Habilitar controladores
 
 app.Run();
