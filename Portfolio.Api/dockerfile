@@ -1,33 +1,29 @@
-# 📄 Portfolio.Api/Dockerfile
+# 📄 Dockerfile (En la carpeta Portfolio.Api/)
 
-# ETAPA 1: Construcción (Build)
-# Usar la imagen SDK de .NET para compilar el código
+# Directorio de trabajo: /src, que simula la raíz de la solución dentro del contenedor
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar el archivo .csproj del proyecto API
-COPY ["Portfolio.Api/Portfolio.Api.csproj", "Portfolio.Api/"]
-# Copiar el archivo .csproj del proyecto Shared
-COPY ["Portfolio.Shared/Portfolio.Shared.csproj", "Portfolio.Shared/"]
+# 1. Copiar los archivos .csproj de la API y SHARED
+# Asumimos que la compilación se inicia desde la raíz de la solución, y la carpeta de la API es 'Portfolio.Api'
+# Copiar el .csproj del proyecto API
+COPY Portfolio.Api/*.csproj Portfolio.Api/
+# Copiar el .csproj del proyecto SHARED
+COPY Portfolio.Shared/*.csproj Portfolio.Shared/
+# Copiar el archivo de solución (.sln)
+COPY PortfolioSolution.sln . 
 
-# Copiar el archivo de solución y hacer referencia
+# 2. Restaurar dependencias (se ejecutará desde la raíz /src)
+RUN dotnet restore
+
+# 3. Copiar el resto de archivos y publicar
 COPY . .
-WORKDIR "/src/Portfolio.Api"
-RUN dotnet restore "Portfolio.Api.csproj"
-
-# Construir la aplicación
+WORKDIR /src/Portfolio.Api
 RUN dotnet publish "Portfolio.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # ETAPA 2: Ejecución (Runtime)
-# Usar la imagen Runtime de .NET, mucho más pequeña y segura
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-
-# Copiar los archivos publicados de la etapa de construcción
 COPY --from=build /app/publish .
-
-# Exponer el puerto por defecto de ASP.NET Core (Kestrel)
 EXPOSE 8080 
-
-# Comando de inicio: Ejecutar el archivo DLL
 ENTRYPOINT ["dotnet", "Portfolio.Api.dll"]
