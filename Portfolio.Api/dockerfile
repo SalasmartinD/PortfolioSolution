@@ -1,34 +1,31 @@
-# 📄 Dockerfile (En la carpeta Portfolio.Api/)
+# 📄 Dockerfile (Ubicado en Portfolio.Api/)
 
-# ETAPA 1: Construcción (Build)
+# ETAPA 1: Construcción
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# 💥 CORRECCIÓN DE RUTAS: COPIAMOS EL ARCHIVO DE SOLUCIÓN Y LOS PROYECTOS DESDE LA RAÍZ 💥
+# 1. Copiar el archivo de solución desde la raíz
+COPY PortfolioSolution.sln .
 
-# Copiar el archivo de solución (.sln) y el proyecto de la API
-COPY ../PortfolioSolution.sln . 
-COPY Portfolio.Api.csproj Portfolio.Api/
+# 2. Copiar los archivos .csproj usando la ruta desde la raíz
+# Como el contexto es la raíz, copiamos "Portfolio.Api/..." hacia "Portfolio.Api/"
+COPY Portfolio.Api/Portfolio.Api.csproj Portfolio.Api/
+COPY Portfolio.Shared/Portfolio.Shared.csproj Portfolio.Shared/
 
-# 1. COPIAR LA CARPETA SHARED COMPLETA
-# Usamos la notación 'subir un nivel' (../) para encontrar la carpeta Shared.
-COPY ../Portfolio.Shared/Portfolio.Shared.csproj Portfolio.Shared/
-
-# Copiar el resto de los archivos necesarios para la restauración
-# Esto es esencial, ya que el .sln necesita ver los archivos .csproj para restaurar
-COPY . .
-
-# 2. Restaurar dependencias 
-# Ahora el WORKDIR se mueve a la carpeta API para restaurar (asumiendo que el .csproj de la API es el que tiene las referencias)
-WORKDIR /src/Portfolio.Api
-
+# 3. Restaurar dependencias
 RUN dotnet restore
 
-# 3. Publicar (Se mantiene igual)
+# 4. Copiar todo el código fuente
+COPY . .
+
+# 5. Publicar
+# Cambiamos al directorio del proyecto API para publicar
+WORKDIR "/src/Portfolio.Api"
 RUN dotnet publish "Portfolio.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
-# ETAPA 2: Ejecución (Runtime)
+
+# ETAPA 2: Ejecución
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 8080 
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "Portfolio.Api.dll"]
