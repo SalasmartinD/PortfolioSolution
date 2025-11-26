@@ -1,10 +1,9 @@
-// 📄 Portfolio.Api/Services/EmailService.cs
-
 using Microsoft.Extensions.Configuration;
 using Portfolio.Shared.Models;
-using System.Net;
-using System.Net.Mail;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp; // 💥 USAMOS MAILKIT
+using MimeKit;          // 💥 USAMOS MIMEKIT
+using MailKit.Security;
 
 namespace Portfolio.Api.Services
 {
@@ -16,32 +15,46 @@ namespace Portfolio.Api.Services
         public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            // Leer la dirección de recepción de appsettings.json
             _recipientEmail = _configuration["SmtpSettings:RecipientEmail"]!;
         }
 
         public async Task SendContactMessage(ContactMessage message)
         {
             var smtpSettings = _configuration.GetSection("SmtpSettings");
+
+            // 1. Crear el mensaje con MimeKit
+            var email = new MimeMessage();
             
-            // Usar dispose para asegurar que la conexión se cierre
-            using (var client = new SmtpClient(smtpSettings["Host"], int.Parse(smtpSettings["Port"]!)))
+            // Remitente (Tu cuenta de Gmail)
+            email.From.Add(new MailboxAddress("Portafolio Contacto", smtpSettings["SenderEmail"]));
+            // Destinatario (Tú)
+            email.To.Add(new MailboxAddress("Yo", _recipientEmail));
+            
+            email.Subject = $"[PORTAFOLIO] {message.Subject}";
+
+            var bodyBuilder = new BodyBuilder
             {
-                client.EnableSsl = true; 
-                client.Credentials = new NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
+                TextBody = $"Nombre: {message.Name}\nEmail: {message.Email}\n\nMENSAJE:\n{message.Message}"
+            };
+            email.Body = bodyBuilder.ToMessageBody();
 
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(smtpSettings["SenderEmail"]!, message.Name),
-                    Subject = $"[PORTAFOLIO] Mensaje de: {message.Name} - {message.Subject}",
-                    Body = $"De: {message.Name} ({message.Email})\n\n{message.Message}",
-                    IsBodyHtml = false
-                };
+            // 2. Enviar con MailKit (SmtpClient)
+            using (var client = new SmtpClient())
+            {
+                // Aceptar certificados SSL aunque haya problemas menores (útil en Docker)
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                mailMessage.To.Add(_recipientEmail);
+                // Conectar a Gmail (Puerto 587, StartTls)
+                await client.ConnectAsync(smtpSettings["Host"], int.Parse(smtpSettings["Port"]!), SecureSocketOptions.StartTls);
 
-                // Envía el correo de forma asíncrona
-                await client.SendMailAsync(mailMessage);
+                // Autenticar
+                await client.AuthenticateAsync(smtpSettings["Username"], smtpSettings["Password"]);
+
+                // Enviar
+                await client.SendAsync(email);
+
+                // Desconectar limpiamente
+                await client.DisconnectAsync(true);
             }
         }
     }
