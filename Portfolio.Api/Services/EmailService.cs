@@ -1,9 +1,10 @@
+// 📄 Portfolio.Api/Services/EmailService.cs (Usando SendGrid)
+
 using Microsoft.Extensions.Configuration;
 using Portfolio.Shared.Models;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MimeKit;
-using Microsoft.Extensions.Logging; // 💥 Necesario para los logs
+using SendGrid; // 💥 SendGrid Client
+using SendGrid.Helpers.Mail; // 💥 Para crear el objeto Mail
 
 namespace Portfolio.Api.Services
 {
@@ -11,66 +12,45 @@ namespace Portfolio.Api.Services
     {
         private readonly IConfiguration _configuration;
         private readonly string _recipientEmail;
-        private readonly ILogger<EmailService> _logger; // 💥 Nuevo Logger
+        private readonly string _senderEmail;
+        private readonly string _apiKey;
 
-        // Actualiza el constructor para recibir el Logger
-        public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
+        public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _recipientEmail = _configuration["SmtpSettings:RecipientEmail"]!;
-            _logger = logger;
+            var settings = _configuration.GetSection("SendGridSettings");
+            
+            // Cargar credenciales de SendGrid
+            _apiKey = settings["ApiKey"]!; 
+            _senderEmail = settings["SenderEmail"]!;
+            _recipientEmail = settings["RecipientEmail"]!;
         }
 
         public async Task SendContactMessage(ContactMessage message)
         {
-            var smtpSettings = _configuration.GetSection("SmtpSettings");
-            var host = smtpSettings["Host"];
-            var port = int.Parse(smtpSettings["Port"]!);
-            var username = smtpSettings["Username"];
-            var password = smtpSettings["Password"];
-            var sender = smtpSettings["SenderEmail"];
+            // 1. Crear el cliente SendGrid
+            var client = new SendGridClient(_apiKey);
 
-            var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("Portafolio", sender));
-            email.To.Add(new MailboxAddress("Yo", _recipientEmail));
-            email.Subject = $"[PORTAFOLIO] {message.Subject}";
+            // 2. Definir remitente (debe ser la dirección verificada)
+            var from = new EmailAddress(_senderEmail, message.Name);
+            
+            // 3. Definir destinatario (tú)
+            var to = new EmailAddress(_recipientEmail, "Yo");
+            
+            // 4. Construir el contenido
+            var subject = $"[PORTAFOLIO] {message.Subject}";
+            var plainTextContent = $"Nombre: {message.Name} ({message.Email})\n\nMENSAJE:\n{message.Message}";
+            
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, null);
 
-            var bodyBuilder = new BodyBuilder
+            // 5. Enviar usando la API HTTP
+            var response = await client.SendEmailAsync(msg);
+
+            if (!response.IsSuccessStatusCode)
             {
-                TextBody = $"Nombre: {message.Name}\nEmail: {message.Email}\n\nMENSAJE:\n{message.Message}"
-            };
-            email.Body = bodyBuilder.ToMessageBody();
-
-            using (var client = new SmtpClient())
-            {
-                // Aceptar certificados SSL (útil en Docker)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-                try 
-                {
-                    _logger.LogInformation($"1. Conectando a SMTP: {host}:{port}...");
-                    
-                    // 💥 CAMBIO CLAVE: useSsl = true (Para puerto 465) 💥
-                    // Si usas 465, el tercer parámetro debe ser 'true'. Si usas 587, es 'false'.
-                    // Vamos a forzar el uso de SSL implícito si el puerto es 465.
-                    bool useSsl = port == 465;
-                    
-                    await client.ConnectAsync(host, port, useSsl);
-                    _logger.LogInformation("2. Conectado. Autenticando...");
-
-                    await client.AuthenticateAsync(username, password);
-                    _logger.LogInformation("3. Autenticado. Enviando...");
-
-                    await client.SendAsync(email);
-                    _logger.LogInformation("4. ¡Enviado!");
-
-                    await client.DisconnectAsync(true);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"ERROR SMTP CRÍTICO: {ex.Message}");
-                    throw; // Re-lanzar para que el controlador lo capture
-                }
+                // Si SendGrid devuelve un error (ej. API Key inválida)
+                var body = await response.Body.ReadAsStringAsync();
+                throw new Exception($"SendGrid API Error: {response.StatusCode}. Response: {body}");
             }
         }
     }
