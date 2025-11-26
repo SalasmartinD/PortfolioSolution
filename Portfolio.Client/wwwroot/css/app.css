@@ -1,139 +1,156 @@
+/*================================
+  1. ESTILOS BASE Y TEMA GLOBAL 
+==================================*/
+
+/* Define el tema de fondo, fuente y ancho mínimo de la página */
 .bright-theme, .bright-theme body {
     /* Usar un gris muy brillante, pero que no es blanco puro. */
     font-family: 'Inter', sans-serif;
     color: #E0E6F6 !important; 
     background-color: #0c0d12 !important; 
-    min-width: 768px;
+    /* 💥 ELIMINAR O COMENTAR ESTA LÍNEA 💥 */
+    /* min-width: 768px; */
 }
 
-#cursor-halo {
-    /* 1. Posicionamiento fijo para seguir el viewport */
-    position: fixed; 
-    pointer-events: none; /* Crucial: permite hacer clic a través del halo */
-    z-index: 9999; /* Asegura que esté siempre encima de todo */
-
-    /* 2. Forma y Tamaño (Define el tamaño máximo del halo) */
-    width: 250px; 
-    height: 250px; 
-    border-radius: 50%; /* Lo convierte en círculo */
-    
-    /* 3. Color y Efecto de Luz (El efecto clave) */
-    background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 60%); 
-    /* El color rgba(16, 185, 129, 0.15) es un verde/cian muy suave */
-    
-    /* 4. Suavizado de la animación/movimiento */
-    transition: transform 0.1s ease-out; 
-    
-    /* 5. Inicialmente oculto o en un estado neutral */
-    transform: translate(-50%, -50%); 
-    opacity: 0;
-}
-
-/* Ajusta el color de los enlaces de navegación anclados */
-.nav-link {
-    /* Blanco brillante para los enlaces de menú */
-    color: #FFFFFF !important; 
-    transition: color 0.2s ease-in-out;
-}
-
-/* Estilos para las tarjetas de contacto */
-.contact-card .email-address,
-.contact-card .github-username,
-.contact-card .linkedin-name,
-.contact-card .whatsapp-number {
-    font-size: 0.9em; /* Ajusta el tamaño de fuente si es necesario */
-    word-break: break-all; /* Rompe palabras largas para que quepan */
-    overflow-wrap: break-word; /* Otra opción similar */
-}
-
-/* Ajusta el tamaño de los iconos si se salen */
-.contact-card .fas, .contact-card .fab {
-    font-size: 1.8em; /* Un poco más pequeño si 2x es muy grande */
-    min-width: 1.2em; /* Asegura un ancho mínimo para iconos */
-}
-
-/* Si tienes emojis en el texto directamente, puedes aplicarles esto */
-.contact-card p, .contact-card h6 {
-    white-space: normal; /* Asegura que el texto se envuelva */
-}
-
-/* Estilo para los botones principales */
-.btn-contact-action {
-    flex-shrink: 0; /* Evita que el botón se encoja demasiado */
-    margin-left: 10px; /* Espacio entre el texto y el botón */
-}
-
-/* Para las descripciones largas de los proyectos */
-.project-description {
-    word-break: break-word; /* Rompe palabras largas */
-    overflow-wrap: break-word; /* Alternativa para mejor compatibilidad */
-    white-space: normal; /* Asegura que el texto se envuelva y no se vaya en una línea */
-    /* max-height: 100px; Si quieres limitar la altura y tener scrollbar */
-    /* overflow-y: auto; */
-}
-
-/* Para el contenedor de las insignias, asegura que fluyan bien */
-.project-technologies {
-    display: flex;
-    flex-wrap: wrap; /* Las insignias se envuelven en nuevas líneas si no caben */
-    gap: 5px; /* Pequeño espacio entre insignias */
-}
-
-/* Ajusta el padding de las tarjetas si los bordes están muy justos */
-.card-body {
-    padding: 15px; /* Un poco más de padding si es necesario */
-}
-
-/* 2. Forzar el color de los Títulos Principales (H1 - Tu Nombre) */
-/* Lo mantenemos en blanco puro (#FFFFFF) o un gris súper brillante si lo prefieres, pero quitamos h2 y h3. */
+/* Colores de Títulos y Acento (Sobrescribe Bootstrap) */
+/* H1 (Nombre principal) */
 .bright-theme h1 { 
-    color: #dbdbdb !important; 
+    color: #DBDBDB !important; /* Blanco muy suave */
 }
 
-/* 3. Restaurar el Color de ACENTO (el azul/cian) para las clases de Bootstrap */
-/* Usamos el color de acento que deseas (ej. un cian brillante, #00ffc4) */
+/* Títulos de sección (H2, H3) y color primario (el acento Cian/Azul) */
 .bright-theme .text-primary, 
-.bright-theme h2, /* Para títulos de sección que NO usan text-primary */
+.bright-theme h2, 
 .bright-theme h3 {
-    color: #0980c5 !important; /* <--- COLOR DE ACENTO BRILLANTE (Cian/Aqua) */
+    color: #0980C5 !important; 
 }
 
-/* 4. Asegurar los textos secundarios (Muted) */
+/* Color para el texto secundario o sutil */
 .bright-theme .text-muted {
-    color: #C0C8D6 !important; /* Gris claro para el texto secundario */
+    color: #C0C8D6 !important; 
 }
 
-/* 5. Ajustar el color de los enlaces de navegación */
-.bright-theme .nav-link {
-    color: #ccd0db !important; /* Mismo color que el texto general */
-}
-
-/* 2. Forzar el color de los Títulos Principales (H1, H2) */
-h1, h2, h3 {
-    color: #FFFFFF !important; /* Blanco puro para máxima visibilidad */
-}
-
+/* Corrección de Tipografía (Monoespaciada) */
 code, .text-monospace {
     font-family: 'Space Mono', monospace;
 }
 
+/* Regla genérica para títulos (eliminada ya que fue reemplazada por .bright-theme h1, h2, h3) */
+/* La regla h1, h2, h3 { color: #FFFFFF !important; } fue eliminada para evitar duplicados. */
+
+
+/*================================
+  2. ESTILOS DE NAVEGACIÓN ANCLADA
+==================================*/
+
+/* Reglas generales de los enlaces de menú */
 .nav-link {
+    color: #CCD0DB !important; /* Mismo color que el texto general, pero asegurado */
     transition: color 0.2s ease-in-out;
 }
 
+/* Efecto hover del menú anclado */
 .nav-link:hover {
-    color: #0980c5 !important; /* Color de énfasis (verde brillante/aqua) */
+    color: #0980C5 !important; /* Color de énfasis */
 }
 
-.sidebar-sticky-left {
-    /* Fija la posición en relación con el viewport */
+
+/*================================
+  3. ESTILOS DEL CURSOR (HALO)
+==================================*/
+
+#cursor-halo {
     position: fixed; 
-    /* Ocupa toda la altura de la pantalla */
-    height: 100vh; 
-    /* Asegura que no se desplace con el contenido */
-    overflow-y: hidden; 
-    /* El ancho debe ser manejado por la clase col-lg-5 en el HTML */
+    pointer-events: none; 
+    z-index: 9999; 
+    width: 250px; 
+    height: 250px; 
+    border-radius: 50%; 
+    background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 60%); 
+    transition: transform 0.1s ease-out; 
+    transform: translate(-50%, -50%); 
+    opacity: 0;
 }
+
+
+/*================================
+  4. ESTILOS DE TARJETAS Y RESPONSIVIDAD
+==================================*/
+
+/* Contenedor de las Insignias de Tecnología */
+.project-technologies {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 5px; 
+    
+    /* Asegurar que las palabras largas se rompan en contenedores estrechos */
+    overflow: hidden; 
+    word-break: break-word; 
+    word-wrap: break-word; 
+}
+
+/* Descripciones de Proyectos y Textos Largos */
+.project-description {
+    word-break: break-word; 
+    overflow-wrap: break-word; 
+    white-space: normal; 
+}
+
+/* Botones de Contacto (Asegura que el texto largo no desborde) */
+.contact-card .email-address,
+.contact-card .github-username,
+.contact-card .linkedin-name,
+.contact-card .whatsapp-number {
+    font-size: 0.9em;
+    word-break: break-all;
+    overflow-wrap: break-word; 
+}
+
+/* Tamaño de Iconos de Contacto */
+.contact-card .fas, .contact-card .fab {
+    font-size: 1.8em; 
+    min-width: 1.2em; 
+}
+
+/* Asegura que el texto en las tarjetas se envuelva */
+.contact-card p, .contact-card h6 {
+    white-space: normal; 
+}
+
+/* Alineación de botones de Contacto */
+.btn-contact-action {
+    flex-shrink: 0; 
+    margin-left: 10px; 
+}
+
+/* Padding de las tarjetas */
+.card-body {
+    padding: 15px; 
+}
+
+
+/*================================
+  5. REGLAS DE ACCESIBILIDAD Y RESPONSIVIDAD
+==================================*/
+
+/* Quitar el outline del foco inicial */
+:focus {
+    outline: none !important;
+}
+#app:focus {
+    outline: none !important;
+}
+
+/* Outline/Shadow para la accesibilidad del teclado (si no es el primer elemento) */
+button:focus,
+a:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none !important;
+}
+
+/* Reglas del Sidebar Fijo (Solo en Desktop) */
+/* El estilo 'sidebar-sticky-left' debe ser definido fuera de la media query
+   si se usa globalmente, pero lo limitaremos a Desktop para evitar conflictos. */
 
 @media (min-width: 992px) { /* Aplica solo a partir del breakpoint 'lg' */
     .sidebar-sticky-left {
@@ -143,24 +160,7 @@ code, .text-monospace {
 }
 @media (max-width: 991px) { /* Para pantallas más pequeñas */
     .sidebar-sticky-left {
-        position: static; /* Deshace el fixed */
+        position: static; /* Deshace el fixed y permite que se desplace */
         height: auto;
     }
-}
-
-:focus {
-    outline: none !important;
-}
-
-/* Opcional: Si quieres mantener el outline solo en botones para accesibilidad */
-button:focus,
-a:focus {
-    /* Puedes usar una sombra suave en lugar del outline nativo del navegador */
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Color azul suave */
-    outline: none !important;
-}
-
-/* Aplica el outline: none también al contenedor principal de Blazor */
-#app:focus {
-    outline: none !important;
 }
