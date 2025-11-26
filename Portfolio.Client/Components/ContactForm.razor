@@ -65,7 +65,7 @@
         try
         {
             var apiUrl = "https://portfoliosolution.onrender.com/api/Contact"; // Se el puerto HTTP/HTTPS según corresponda
-            
+            //var apiUrl = "https://localhost:7208/api/Contact";
             var response = await Http.PostAsJsonAsync(apiUrl, model);
 
             if (response.IsSuccessStatusCode)
