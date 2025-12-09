@@ -38,8 +38,8 @@
         try
         {
             // La URL DEBE COINCIDIR con el puerto en el que corre Portfolio.Api
-            //var apiUrl = "https://portfoliosolution.onrender.com/api/Projects";
-            var apiUrl = "https://localhost:7208/api/Projects";
+            var apiUrl = "https://portfoliosolution.onrender.com/api/Projects";
+            //var apiUrl = "https://localhost:7208/api/Projects";
             projects = await Http.GetFromJsonAsync<List<Project>>(apiUrl);
         }
         catch (Exception ex)
