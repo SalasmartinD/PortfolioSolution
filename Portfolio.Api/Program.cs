@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IEmailService, EmailService>();
 
 // 1. OBTENER LA CADENA DE CONEXIÓN
-// Esto leerá automáticamente 'appsettings.json' en tu PC
+// Esto leerá automáticamente 'appsettings.json'
 // Y leerá automáticamente la variable 'ConnectionStrings__DefaultConnection' en Render
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 

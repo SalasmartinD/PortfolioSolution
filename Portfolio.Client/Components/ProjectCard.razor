@@ -1,4 +1,3 @@
-@* 📄 Portfolio.Client/Components/ProjectCard.razor *@
 @using Portfolio.Shared.Models
 
 <div class="col">
@@ -29,7 +28,11 @@
                 <i class="fab fa-github"></i> Código Fuente
             </a>
             
-          @*  @if (!string.IsNullOrWhiteSpace(Project.LiveDemoUrl))
+
+            
+          @* 
+            Link para ver la demo de los proyectos cuando haga falta
+           @if (!string.IsNullOrWhiteSpace(Project.LiveDemoUrl))
             {
                 <a href="@Project.LiveDemoUrl" target="_blank" class="btn btn-sm btn-success">
                     <i class="fas fa-external-link-alt"></i> Demo

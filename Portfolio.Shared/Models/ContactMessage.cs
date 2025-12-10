@@ -1,5 +1,3 @@
-// 📄 Portfolio.Shared/Models/ContactMessage.cs
-
 using System.ComponentModel.DataAnnotations;
 
 namespace Portfolio.Shared.Models

@@ -1,4 +1,3 @@
-// 📄 Portfolio.Api/Controllers/ContactController.cs
 using Microsoft.AspNetCore.Mvc; 
 using Microsoft.Extensions.Logging;
 using Portfolio.Shared.Models; // Para ContactMessage
@@ -31,7 +30,7 @@ public class ContactController : ControllerBase
 
         try
         {
-            // 💥 LLAMADA REAL AL SERVICIO DE CORREO 💥
+            //  LLAMADA REAL AL SERVICIO DE CORREO 
             await _emailService.SendContactMessage(message);
 
             _logger.LogInformation("NUEVO MENSAJE DE CONTACTO ENVIADO CON ÉXITO.");

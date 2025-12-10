@@ -4,12 +4,10 @@
 
 /* Define el tema de fondo, fuente y ancho mínimo de la página */
 .bright-theme, .bright-theme body {
-    /* Usar un gris muy brillante, pero que no es blanco puro. */
+    /* Uso un gris muy brillante, pero que no es blanco puro. */
     font-family: 'Inter', sans-serif;
     color: #E0E6F6 !important; 
     background-color: #0c0d12 !important; 
-    /* 💥 ELIMINAR O COMENTAR ESTA LÍNEA 💥 */
-    /* min-width: 768px; */
 }
 
 /* Colores de Títulos y Acento (Sobrescribe Bootstrap) */
@@ -18,7 +16,7 @@
     color: #DBDBDB !important; /* Blanco muy suave */
 }
 
-/* Títulos de sección (H2, H3) y color primario (el acento Cian/Azul) */
+/* Títulos de sección (H2, H3) y color primario (el acento Azul) */
 .bright-theme .text-primary, 
 .bright-theme h2, 
 .bright-theme h3 {
@@ -34,9 +32,6 @@
 code, .text-monospace {
     font-family: 'Space Mono', monospace;
 }
-
-/* Regla genérica para títulos (eliminada ya que fue reemplazada por .bright-theme h1, h2, h3) */
-/* La regla h1, h2, h3 { color: #FFFFFF !important; } fue eliminada para evitar duplicados. */
 
 
 /*================================
@@ -149,8 +144,6 @@ a:focus {
 }
 
 /* Reglas del Sidebar Fijo (Solo en Desktop) */
-/* El estilo 'sidebar-sticky-left' debe ser definido fuera de la media query
-   si se usa globalmente, pero lo limitaremos a Desktop para evitar conflictos. */
 
 @media (min-width: 992px) { /* Aplica solo a partir del breakpoint 'lg' */
     .sidebar-sticky-left {

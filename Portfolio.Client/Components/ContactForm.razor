@@ -1,8 +1,7 @@
-@* 📄 Fragmento de Portfolio.Client/Components/ContactForm.razor *@
 @using System.ComponentModel.DataAnnotations 
 @using Microsoft.AspNetCore.Components.Forms
 @using Portfolio.Shared.Models
-@inject HttpClient Http // Necesitas HttpClient para la llamada
+@inject HttpClient Http
 
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
     
@@ -64,8 +63,8 @@
         
         try
         {
-            var apiUrl = "https://portfoliosolution.onrender.com/api/Contact"; // Se el puerto HTTP/HTTPS según corresponda
-            //var apiUrl = "https://localhost:7208/api/Contact";
+            var apiUrl = "https://portfoliosolution.onrender.com/api/Contact";
+            //var apiUrl = "https://localhost:7208/api/Contact"; // Se pone el puerto HTTP/HTTPS según corresponda
             var response = await Http.PostAsJsonAsync(apiUrl, model);
 
             if (response.IsSuccessStatusCode)

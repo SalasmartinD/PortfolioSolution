@@ -1,5 +1,3 @@
-// 📄 Portfolio.Client/wwwroot/js/customCursor.js
-
 window.setupCursorHalo = function () {
     const halo = document.getElementById('cursor-halo');
     if (!halo) return;
