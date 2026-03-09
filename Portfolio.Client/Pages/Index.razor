@@ -157,4 +157,53 @@
             await JSRuntime.InvokeVoidAsync("setupCursorHalo");
         }
     }
+
+    private List<Project> projects = new List<Project>
+    {
+        new Project 
+        { 
+            Id = 1, 
+            Title = "LubriManager (En Proceso)", 
+            ShortDescription = "Software de gestión empresarial para lubricentros. Incluye control de stock, gestión de ventas, pedidos a proveedores y cálculo automatizado de ganancias. Arquitectura robusta enfocada en la integridad de datos.", 
+            Technologies = "C#, .NET, WPF, MVVM, SQL Server",
+            GitHubUrl = "",
+            LiveDemoUrl = ""
+        },
+        new Project 
+        { 
+            Id = 2, 
+            Title = "Buscaminas C/SDL2", 
+            ShortDescription = "Recreación del clásico juego utilizando lenguaje C puro. Implementación de algoritmos de recursividad para el despeje de celdas y manejo de texturas y fuentes con la librería SDL2.", 
+            Technologies = "C, SDL2, SDL_ttf, Algoritmos",
+            GitHubUrl = "https://github.com/SalasmartinD/Buscaminas",
+            LiveDemoUrl = ""
+        },
+        new Project 
+        { 
+            Id = 3, 
+            Title = "Portafolio Médico", 
+            ShortDescription = "Sitio web profesional desarrollado para una estudiante de medicina. Enfocado en la presentación de trayectoria académica y blog de artículos científicos.", 
+            Technologies = "C#, Blazor WebAssembly, Bootstrap, ASP.NET Core",
+            GitHubUrl = "",
+            LiveDemoUrl = "https://portfolio-mar-seven.vercel.app" // Cambialo si tenés el link
+        },
+        new Project 
+        { 
+            Id = 4, 
+            Title = "Full-Stack Portfolio", 
+            ShortDescription = "Mi portafolio actual. Una SPA que demuestra la integración de Blazor con una API de .NET, despliegue automatizado y manejo de servicios externos como SendGrid.", 
+            Technologies = "Blazor WASM, .NET API, Docker, Vercel, Render",
+            GitHubUrl = "https://github.com/SalasmartinD/PortfolioSolution",
+            LiveDemoUrl = "https://portfolio-solution-85fm.vercel.app"
+        },
+        new Project 
+        { 
+            Id = 6, 
+            Title = "Catalog API (En Proceso)", 
+            ShortDescription = "API RESTful desarrollada con una arquitectura orientada a microservicios, enfocada en la gestión de catálogos de productos con alta disponibilidad.", 
+            Technologies = "ASP.NET Core, MongoDB, Docker",
+            GitHubUrl = "",
+            LiveDemoUrl = "" 
+        }
+    };
 }
