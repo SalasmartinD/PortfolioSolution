@@ -1,59 +1,45 @@
 @using Portfolio.Shared.Models
 
 <div class="col">
-    <div class="card shadow-lg border-@GetCardColor(Project.Title)" 
-         style="background-color: #F8F9FA !important;">
+    <div class="glass-card border-0 h-100">
         <div class="card-body d-flex flex-column">
             
-            <h5 class="card-title text-primary">
-                <i class="fas fa-folder me-2"></i> @Project.Title
+            <h5 class="card-title mb-3">
+                <i class="fas fa-folder me-2 text-primary"></i> @Project.Title
             </h5>
             
-            <p class="card-text flex-grow-1 text-dark overflow-auto project-description">@Project.ShortDescription</p>
-    <h6 class="text-dark">Tecnologías Clave:</h6>
-            <div class="mt-auto project-technologies d-flex flex-wrap gap-2"> 
+            <p class="card-text flex-grow-1 overflow-auto project-description mb-4">@Project.ShortDescription</p>
+            
+            <h6 class="text-muted small fw-bold mb-2 text-uppercase" style="letter-spacing: 0.05em;">Tecnologías Clave</h6>
+            <div class="mt-auto project-technologies d-flex flex-wrap gap-2 mb-4"> 
                 @if (!string.IsNullOrEmpty(Project.Technologies))
                 {
                     @foreach (var tech in Project.Technologies.Split(',', StringSplitOptions.RemoveEmptyEntries))
                     {
-                        <span class="badge bg-secondary text-light text-break">@tech.Trim()</span> 
+                        <span class="tech-badge text-break">@tech.Trim()</span> 
                     }
                 }
             </div>
         </div>
         
-        <div class="card-footer bg-light border-top d-grid gap-2 p-3">
-            
-            <a href="@Project.GitHubUrl" target="_blank" class="btn btn-sm btn-dark me-2">
-                <i class="fab fa-github"></i> Código Fuente
-            </a>
-            
-
-            
-          @* 
-            Link para ver la demo de los proyectos cuando haga falta
-           @if (!string.IsNullOrWhiteSpace(Project.LiveDemoUrl))
+        <div class="card-footer bg-transparent border-0 d-grid gap-2 px-4 pb-4 pt-0">
+            @if (!string.IsNullOrWhiteSpace(Project.GitHubUrl))
             {
-                <a href="@Project.LiveDemoUrl" target="_blank" class="btn btn-sm btn-success">
-                    <i class="fas fa-external-link-alt"></i> Demo
+                <a href="@Project.GitHubUrl" target="_blank" class="btn btn-sm btn-gradient text-white">
+                    <i class="fab fa-github me-2"></i> Código Fuente
                 </a>
             }
-            *@
+            else
+            {
+                <button class="btn btn-sm btn-outline-secondary text-muted border-secondary" disabled>
+                    <i class="fas fa-lock me-2"></i> Repositorio Privado
+                </button>
+            }
         </div>
     </div>
 </div>
 
 @code {
-    // Parámetro para recibir el objeto Project desde la página principal
     [Parameter]
     public Project Project { get; set; } = new Project();
-
-    // Función simple para darle un color diferente al borde de cada tarjeta
-    private string GetCardColor(string title)
-    {
-        if (title.Contains("Tareas")) return "danger";
-        if (title.Contains("API")) return "info";
-        if (title.Contains("Portafolio")) return "success";
-        return "secondary";
-    }
 }

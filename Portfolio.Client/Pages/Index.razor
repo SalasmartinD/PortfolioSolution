@@ -3,12 +3,11 @@
 @using Portfolio.Shared.Models
 @inject IJSRuntime JSRuntime
 
-
 <div class="container-fluid min-vh-100 d-flex pt-5">
     
     <div class="row w-100"> 
 
-        <div class="col-lg-5 col-xl-4 sidebar-sticky-left d-flex flex-column p-5">
+        <div class="col-lg-5 col-xl-4 sidebar-sticky-left d-flex flex-column p-5 animate-fade-in-up delay-1">
             
             <header class="mb-5">
                 <h1 class="display-3 fw-bold text-light mb-3">Salas Martín Daniel</h1>
@@ -21,126 +20,146 @@
             
             <nav class="nav flex-column mb-5 d-none d-lg-block pl-15"> 
 
-                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#about">
-                    <span class="me-3 text-secondary">—</span> Sobre Mí
+                <a class="nav-link text-uppercase fw-bold p-0 mb-3" href="#about">
+                    <span class="nav-indicator-line"></span> Sobre Mí
                 </a>
-                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#experience">
-                    <span class="me-3 text-secondary">—</span> EXPERIENCIA
+                <a class="nav-link text-uppercase fw-bold p-0 mb-3" href="#experience">
+                    <span class="nav-indicator-line"></span> Experiencia
                 </a>
-                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#projects">
-                    <span class="me-3 text-secondary">—</span> Proyectos
+                <a class="nav-link text-uppercase fw-bold p-0 mb-3" href="#projects">
+                    <span class="nav-indicator-line"></span> Proyectos
                 </a>
-                <a class="nav-link text-uppercase fw-bold text-white-50 p-0 mb-3" href="#contact">
-                    <span class="me-3 text-secondary">—</span> Contacto
+                <a class="nav-link text-uppercase fw-bold p-0 mb-3" href="#contact">
+                    <span class="nav-indicator-line"></span> Contacto
                 </a>
             </nav>
             
             <footer class="mt-auto pb-5">
-                </footer>
+            </footer>
         </div>
 
         <div class="col-lg-7 offset-lg-5 col-xl-8 offset-xl-4 pt-5 px-5">
             
-        <section id="about" class="py-5">
-            <h2 class="display-5 fw-bold text-light mb-5 text-center">
-                Sobre Mí
-            </h2>
-            <p class="text-white-50 mb-4 fs-5">
-                ¡Hola! Soy <strong>Martín Salas</strong>, estudiante avanzado de Ingeniería en Informática en la UNLaM. Mi trayectoria combina una sólida formación académica con experiencia técnica aplicada en entornos gubernamentales y proyectos independientes.
-            </p>
-            <p class="text-white-50 mb-4 fs-5">
-                Me especializo en el ecosistema <strong>.NET (C#)</strong> y el desarrollo Backend, aunque mi rol actual en soporte IT me ha brindado una visión integral de la infraestructura, la seguridad y la resolución de problemas críticos en tiempo real.
-            </p>
-            <p class="text-white-50 mb-4 fs-5">
-                Mi enfoque actual está centrado en <strong>potenciar mi carrera como desarrollador de software</strong>, buscando enfrentar desafíos complejos que me permitan aplicar buenas prácticas de arquitectura y contribuir al éxito de productos tecnológicos escalables. 
-            </p>
-            <p class="text-white-50 mb-0 fs-5">
-                Soy un apasionado del aprendizaje continuo, la ciberseguridad y la eficiencia algorítmica, siempre con la mirada puesta en transformar código en soluciones con impacto real.
-            </p>
-        </section>
+            <section id="about" class="py-5 animate-fade-in-up delay-2">
+                <h2 class="display-5 fw-bold text-light mb-5 text-center">
+                    Sobre Mí
+                </h2>
+                <p class="text-white-50 mb-4 fs-5">
+                    ¡Hola! Soy <strong>Martín Salas</strong>, estudiante avanzado de Ingeniería en Informática en la UNLaM. Mi trayectoria combina una sólida formación académica con experiencia técnica aplicada en entornos gubernamentales y proyectos independientes.
+                </p>
+                <p class="text-white-50 mb-4 fs-5">
+                    Me especializo en el ecosistema <strong>.NET (C#)</strong> y el desarrollo Backend, aunque mi rol actual en soporte IT me ha brindado una visión integral de la infraestructura, la seguridad y la resolución de problemas críticos en tiempo real.
+                </p>
+                <p class="text-white-50 mb-4 fs-5">
+                    Mi enfoque actual está centrado en <strong>potenciar mi carrera como desarrollador de software</strong>, buscando enfrentar desafíos complejos que me permitan aplicar buenas prácticas de arquitectura y contribuir al éxito de productos tecnológicos escalables. 
+                </p>
+                <p class="text-white-50 mb-0 fs-5">
+                    Soy un apasionado del aprendizaje continuo, la ciberseguridad y la eficiencia algorítmica, siempre con la mirada puesta en transformar código en soluciones con impacto real.
+                </p>
+            </section>
 
             <section id="about-content" class="py-5">
-    </section>
-        
-<hr class="my-5 border-secondary" />
-
-<section id="experience" class="py-5">
-    
-    <h2 class="display-6 fw-bold text-primary mb-5 text-center">Educación y Experiencia</h2>
-
-    <div class="card bg-transparent border-0 mb-4">
-        <div class="card-body p-0">
-            <h5 class="fw-bold text-light mb-1">Soporte IT - Ministerio de Educación de la Nación</h5>
-            <h6 class="text-secondary small mb-2">02/2026 - Presente</h6>
-            <p class="text-muted">
-                Gestión de infraestructura tecnológica y soporte técnico de segundo nivel. Responsable de la configuración y despliegue de políticas de seguridad (2FA), administración de entornos Microsoft 365 y resolución de incidencias en sistemas críticos para asegurar la continuidad operativa del organismo.
-            </p>
-            <div class="mt-2">
-                <span class="badge bg-secondary text-light me-1 fecha">2FA / Seguridad</span>
-                <span class="badge bg-secondary text-light me-1 fecha">Windows 10/11</span>
-                <span class="badge bg-secondary text-light me-1 fecha">Office 365 Admin</span>
-                <span class="badge bg-secondary text-light fecha">Active Directory</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="card bg-transparent border-0 mb-4">
-        <div class="card-body p-0">
-            <h5 class="fw-bold text-light mb-1">Desarrollador Freelance</h5>
-            <h6 class="text-secondary small mb-2">05/2025 - Presente</h6>
-            <p class="text-muted">
-                Diseño y desarrollo de soluciones a medida para clientes particulares. Especializado en la creación de aplicaciones de escritorio y web utilizando arquitectura limpia, garantizando productos escalables, eficientes y fáciles de mantener mediante el uso de patrones de diseño modernos.
-            </p>
-            <div class="mt-2">
-                <span class="badge bg-secondary text-light me-1">C# / .NET</span>
-                <span class="badge bg-secondary text-light me-1">Entity Framework</span>
-                <span class="badge bg-secondary text-light me-1">SQL Server / MongoDB</span>
-                <span class="badge bg-secondary text-light">GitHub / CI/CD</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="card bg-transparent border-0 mb-4">
-        <div class="card-body p-0">
-            <h5 class="fw-bold text-light mb-1">Técnico de Soporte IT (Hardware & Software)</h5>
-            <h6 class="text-secondary small mb-2">03/2025 – 01/2026</h6>
-            <p class="text-muted">
-                Especialista en diagnóstico y reparación física de equipos informáticos. Experiencia en ensamblado de componentes de alto rendimiento, mantenimiento preventivo de hardware y solución de conflictos de software base, optimizando el rendimiento y extendiendo el ciclo de vida de los activos tecnológicos.
-            </p>
-            <div class="mt-2">
-                <span class="badge bg-secondary text-light me-1">Mantenimiento de Hardware</span>
-                <span class="badge bg-secondary text-light me-1">Redes LAN</span>
-                <span class="badge bg-secondary text-light">Resolución de Incidencias</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="card bg-transparent border-0 mb-4">
-        <div class="card-body p-0">
-            <h5 class="fw-bold text-light mb-1">Universidad Nacional de La Matanza (UNLaM)</h5>
-            <h6 class="text-secondary small mb-2">Ingeniería en Informática | 2023 – Presente</h6>
-            <p class="text-muted">
-                Formación académica centrada en la ingeniería de software de alta complejidad. Conocimientos avanzados en estructuras de datos, algoritmos, redes y seguridad informática. Miembro activo de la comunidad estudiantil de ingeniería.
-            </p>
-            <div class="mt-2">
-                <span class="badge bg-secondary text-light me-1">C / C++</span>
-                <span class="badge bg-secondary text-light me-1">Python</span>
-                <span class="badge bg-secondary text-light">Cisco Packet Tracer</span>
-            </div>
-        </div>
-    </div>
-
-</section>
+            </section>
             
             <hr class="my-5 border-secondary" />
 
-                <section id="projects" class="py-5">
-                    <ProjectsList />
-                </section>
+            <section id="experience" class="py-5 animate-fade-in-up delay-3">
+                
+                <h2 class="display-6 fw-bold text-primary mb-5 text-center">Educación y Experiencia</h2>
+
+                <div class="experience-list">
+
+                
+                    <div class="experience-card card bg-transparent border-0">
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold text-light mb-1">Desarrollador Freelance</h5>
+                            <h6 class="text-secondary small mb-2">05/2025 - Presente</h6>
+                            <p class="text-muted">
+                                Diseño y desarrollo de soluciones a medida para clientes particulares. Especializado en la creación de aplicaciones de escritorio y web utilizando arquitectura limpia, garantizando productos escalables, eficientes y fáciles de mantener mediante el uso de patrones de diseño modernos.
+                            </p>
+                            <div class="mt-2 project-technologies">
+                                <span class="tech-badge me-1">C# / .NET</span>
+                                <span class="tech-badge me-1">Blazor</span>
+                                <span class="tech-badge me-1">Entity Framework</span>
+                                <span class="tech-badge me-1">SQL Server / PostgreSQL</span>
+                                <span class="tech-badge">GitHub / CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="experience-card card bg-transparent border-0">
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold text-light mb-1">Soporte IT en Telecomunicaciones - Cat-Technologies</h5>
+                            <h6 class="text-secondary small mb-2">03/2026 - 06/2026</h6>
+                            <p class="text-muted">
+                                Gestión y mantenimiento de infraestructura tecnológica crítica para operaciones de telecomunicaciones de alta disponibilidad. Responsable del soporte técnico de primer nivel, diagnóstico de fallas en redes, aprovisionamiento de servicios, gestión de usuarios y optimización de sistemas de comunicación para garantizar la continuidad operativa y el cumplimiento de los estándares de servicio (SLAs) de la compañía.
+                            </p>
+                            <div class="mt-2 project-technologies">
+                                <span class="tech-badge me-1">Telecomunicaciones & Redes</span>
+                                <span class="tech-badge me-1">Infraestructura de Conectividad</span>
+                                <span class="tech-badge me-1">Resolución de Incidencias (SLAs)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="experience-card card bg-transparent border-0">
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold text-light mb-1">Soporte IT - Ministerio de Educación de la Nación</h5>
+                            <h6 class="text-secondary small mb-2">01/2026 - 03/2026</h6>
+                            <p class="text-muted">
+                                Gestión de infraestructura tecnológica y soporte técnico de segundo nivel. Responsable de la configuración y despliegue de políticas de seguridad (2FA), administración de entornos Microsoft 365 y resolución de incidencias en sistemas críticos para asegurar la continuidad operativa del organismo.
+                            </p>
+                            <div class="mt-2 project-technologies">
+                                <span class="tech-badge me-1">2FA / Seguridad</span>
+                                <span class="tech-badge me-1">Windows 10/11</span>
+                                <span class="tech-badge me-1">Office 365 Admin</span>
+                                <span class="tech-badge">Active Directory</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="experience-card card bg-transparent border-0">
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold text-light mb-1">Técnico de Soporte IT (Hardware & Software)</h5>
+                            <h6 class="text-secondary small mb-2">03/2025 – 01/2026</h6>
+                            <p class="text-muted">
+                                Especialista en diagnóstico y reparación física de equipos informáticos. Experiencia en ensamblado de componentes de alto rendimiento, mantenimiento preventivo de hardware y solución de conflictos de software base, optimizando el rendimiento y extendiendo el ciclo de vida de los activos tecnológicos.
+                            </p>
+                            <div class="mt-2 project-technologies">
+                                <span class="tech-badge me-1">Mantenimiento de Hardware</span>
+                                <span class="tech-badge me-1">Redes LAN</span>
+                                <span class="tech-badge">Resolución de Incidencias</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="experience-card card bg-transparent border-0">
+                        <div class="card-body p-0">
+                            <h5 class="fw-bold text-light mb-1">Universidad Nacional de La Matanza (UNLaM)</h5>
+                            <h6 class="text-secondary small mb-2">Ingeniería en Informática | 2023 – Presente</h6>
+                            <p class="text-muted">
+                                Formación académica centrada en la ingeniería de software de alta complejidad. Conocimientos avanzados en estructuras de datos, algoritmos, redes y seguridad informática. Miembro activo de la comunidad estudiantil de ingeniería.
+                            </p>
+                            <div class="mt-2 project-technologies">
+                                <span class="tech-badge me-1">C / C++</span>
+                                <span class="tech-badge me-1">Python</span>
+                                <span class="tech-badge">Cisco Packet Tracer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            
+            <hr class="my-5 border-secondary" />
+
+            <section id="projects" class="py-5 animate-fade-in-up delay-4">
+                <ProjectsList />
+            </section>
 
             <hr class="my-5 border-secondary" />
 
-            <section id="contact" class="py-5 min-vh-100">
+            <section id="contact" class="py-5 min-vh-100 animate-fade-in-up delay-4">
                 
                 <h2 class="display-5 fw-bold text-light mb-5 text-center">
                     Contacto
@@ -153,7 +172,7 @@
                     </div>
 
                     <div class="col-12 col-lg-7 mx-auto mb-4">
-                        <div class="card border-0 p-3 bg-dark"> 
+                        <div class="card border-0 p-3 bg-dark glass-card"> 
                             <ContactForm /> 
                         </div>
                     </div>
@@ -172,7 +191,7 @@
         {
             // Ejecutar el script JS una vez que el componente se haya renderizado
             await JSRuntime.InvokeVoidAsync("setupCursorHalo");
+            await JSRuntime.InvokeVoidAsync("setupScrollSpy");
         }
     }
-
 }

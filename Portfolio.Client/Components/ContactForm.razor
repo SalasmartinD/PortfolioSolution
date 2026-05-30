@@ -6,52 +6,50 @@
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
     
     <div class="mb-3">
-        <label for="name" class="form-label text-muted">Nombre</label>
-        <InputText id="name" @bind-Value="model.Name" class="form-control bg-dark text-light border-secondary" placeholder="Tu nombre" />
+        <label for="name" class="form-label text-muted small fw-bold text-uppercase">Nombre</label>
+        <InputText id="name" @bind-Value="model.Name" class="form-control custom-input" placeholder="Tu nombre" />
         <ValidationMessage For="@(() => model.Name)" />
     </div>
 
     <div class="mb-3">
-        <label for="email" class="form-label text-muted">Email</label>
-        <InputText id="email" @bind-Value="model.Email" class="form-control bg-dark text-light border-secondary" placeholder="tu@email.com" />
+        <label for="email" class="form-label text-muted small fw-bold text-uppercase">Email</label>
+        <InputText id="email" @bind-Value="model.Email" class="form-control custom-input" placeholder="tu@email.com" />
         <ValidationMessage For="@(() => model.Email)" />
     </div>
 
     <div class="mb-3">
-        <label for="subject" class="form-label text-muted">Asunto</label>
-        <InputText id="subject" @bind-Value="model.Subject" class="form-control bg-dark text-light border-secondary" placeholder="¿De qué se trata?" />
+        <label for="subject" class="form-label text-muted small fw-bold text-uppercase">Asunto</label>
+        <InputText id="subject" @bind-Value="model.Subject" class="form-control custom-input" placeholder="¿De qué se trata?" />
         <ValidationMessage For="@(() => model.Subject)" />
     </div>
 
     <div class="mb-3">
-        <label for="message" class="form-label text-muted">Mensaje</label>
-        <InputTextArea id="message" @bind-Value="model.Message" rows="5" class="form-control bg-dark text-light border-secondary" placeholder="Cuéntame sobre tu proyecto o consulta..." />
+        <label for="message" class="form-label text-muted small fw-bold text-uppercase">Mensaje</label>
+        <InputTextArea id="message" @bind-Value="model.Message" rows="5" class="form-control custom-input" placeholder="Cuéntame sobre tu proyecto o consulta..." />
         <ValidationMessage For="@(() => model.Message)" />
     </div>
     
     <DataAnnotationsValidator /> 
 
-    <button type="submit" class="btn btn-lg w-100 text-white mt-3" 
-            style="background-image: linear-gradient(to right, #00C6FF 0%, #0072FF 100%); border: none;">
+    <button type="submit" class="btn btn-lg w-100 text-white mt-3 btn-gradient">
         @if (IsLoading)
         {
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         }
         else
         {
-            <i class="fas fa-paper-plane me-2"></i>
+            <span><i class="fas fa-paper-plane me-2"></i> Enviar Mensaje</span>
         }
     </button>
     
     @if (!string.IsNullOrWhiteSpace(StatusMessage))
     {
-        <div class="alert alert-info mt-3">@StatusMessage</div>
+        <div class="alert alert-info mt-3 bg-dark border-secondary text-light">@StatusMessage</div>
     }
 
 </EditForm>
 
 @code {
-    // Usamos el modelo ContactMessage compartido
     private ContactMessage model = new ContactMessage();
     private string StatusMessage = "";
     private bool IsLoading = false;
@@ -64,7 +62,6 @@
         try
         {
             var apiUrl = "https://portfoliosolution.onrender.com/api/Contact";
-            //var apiUrl = "https://localhost:7208/api/Contact"; // Se pone el puerto HTTP/HTTPS según corresponda
             var response = await Http.PostAsJsonAsync(apiUrl, model);
 
             if (response.IsSuccessStatusCode)
@@ -74,8 +71,7 @@
             }
             else
             {
-                // Manejo de errores del servidor (ej. error 500)
-                StatusMessage = $"❌ Error al enviar. Código: {response.StatusCode}";
+                StatusMessage = "❌ Error al enviar. Intenta de nuevo más tarde.";
             }
         }
         catch (Exception ex)

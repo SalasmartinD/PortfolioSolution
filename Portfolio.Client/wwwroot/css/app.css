@@ -2,39 +2,97 @@
   1. ESTILOS BASE Y TEMA GLOBAL 
 ==================================*/
 
-/* Define el tema de fondo, fuente y ancho mínimo de la página */
+:root {
+    --bg-primary: #06080f;
+    --bg-secondary: #0c0f1d;
+    --card-bg: rgba(22, 28, 45, 0.4);
+    --card-border: rgba(255, 255, 255, 0.05);
+    --card-border-hover: rgba(0, 198, 255, 0.25);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --primary: #00C6FF;
+    --primary-dark: #0072FF;
+    --primary-glow: rgba(0, 198, 255, 0.15);
+    --primary-gradient: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+}
+
 .bright-theme, .bright-theme body {
-    /* Uso un gris muy brillante, pero que no es blanco puro. */
-    font-family: 'Inter', sans-serif;
-    color: #E0E6F6 !important; 
-    background-color: #0c0d12 !important; 
+    font-family: var(--font-sans);
+    color: var(--text-secondary) !important; 
+    background-color: var(--bg-primary) !important; 
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Ambient Background Glows */
+.bright-theme::before {
+    content: "";
+    position: fixed;
+    top: -15%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(0, 198, 255, 0.06) 0%, rgba(0, 198, 255, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(80px);
+}
+
+.bright-theme::after {
+    content: "";
+    position: fixed;
+    bottom: -15%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, rgba(99, 102, 241, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(100px);
+}
+
+.content-wrapper, .sidebar-sticky-left {
+    position: relative;
+    z-index: 2;
 }
 
 .fecha span {
     color: #b1c6ec !important;
 }
 
-/* Colores de Títulos y Acento (Sobrescribe Bootstrap) */
-/* H1 (Nombre principal) */
-.bright-theme h1 { 
-    color: #DBDBDB !important; /* Blanco muy suave */
+/* Colores de Títulos y Acento */
+.bright-theme h1, .bright-theme .h1 { 
+    color: var(--text-primary) !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
 }
 
-/* Títulos de sección (H2, H3) y color primario (el acento Azul) */
-.bright-theme .text-primary, 
-.bright-theme h2, 
-.bright-theme h3 {
-    color: #0980C5 !important; 
+.bright-theme h2, .bright-theme .h2, 
+.bright-theme h3, .bright-theme .h3,
+.bright-theme h4, .bright-theme .h4,
+.bright-theme h5, .bright-theme .h5 {
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em;
 }
 
-/* Color para el texto secundario o sutil */
+.bright-theme .text-primary {
+    color: var(--primary) !important; 
+}
+
 .bright-theme .text-muted {
-    color: #C0C8D6 !important; 
+    color: var(--text-secondary) !important; 
 }
 
 /* Corrección de Tipografía (Monoespaciada) */
 code, .text-monospace {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 
@@ -42,15 +100,37 @@ code, .text-monospace {
   2. ESTILOS DE NAVEGACIÓN ANCLADA
 ==================================*/
 
-/* Reglas generales de los enlaces de menú */
 .nav-link {
-    color: #CCD0DB !important; /* Mismo color que el texto general, pero asegurado */
-    transition: color 0.2s ease-in-out;
+    display: flex !important;
+    align-items: center;
+    padding: 0.5rem 0 !important;
+    color: var(--text-muted) !important; 
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: color 0.3s ease;
+    text-decoration: none !important;
 }
 
-/* Efecto hover del menú anclado */
-.nav-link:hover {
-    color: #0980C5 !important; /* Color de énfasis */
+.nav-link .nav-indicator-line {
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background-color: var(--text-muted);
+    margin-right: 1rem;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    color: var(--text-primary) !important;
+}
+
+.nav-link:hover .nav-indicator-line, 
+.nav-link.active .nav-indicator-line {
+    width: 60px;
+    background-color: var(--primary);
 }
 
 
@@ -62,13 +142,19 @@ code, .text-monospace {
     position: fixed; 
     pointer-events: none; 
     z-index: 9999; 
-    width: 250px; 
-    height: 250px; 
+    width: 300px; 
+    height: 300px; 
     border-radius: 50%; 
-    background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 60%); 
-    transition: transform 0.1s ease-out; 
+    background: radial-gradient(circle at center, rgba(0, 198, 255, 0.12) 0%, rgba(0, 198, 255, 0) 65%); 
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, transform 0.08s ease-out; 
     transform: translate(-50%, -50%); 
     opacity: 0;
+}
+
+#cursor-halo.cursor-hover {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle at center, rgba(0, 198, 255, 0.18) 0%, rgba(0, 198, 255, 0) 65%); 
 }
 
 
@@ -80,9 +166,7 @@ code, .text-monospace {
 .project-technologies {
     display: flex;
     flex-wrap: wrap; 
-    gap: 5px; 
-    
-    /* Asegurar que las palabras largas se rompan en contenedores estrechos */
+    gap: 6px; 
     overflow: hidden; 
     word-break: break-word; 
     word-wrap: break-word; 
@@ -93,9 +177,12 @@ code, .text-monospace {
     word-break: break-word; 
     overflow-wrap: break-word; 
     white-space: normal; 
+    color: var(--text-secondary) !important;
+    font-size: 0.92rem;
+    line-height: 1.6;
 }
 
-/* Botones de Contacto (Asegura que el texto largo no desborde) */
+/* Botones de Contacto */
 .contact-card .email-address,
 .contact-card .github-username,
 .contact-card .linkedin-name,
@@ -105,26 +192,192 @@ code, .text-monospace {
     overflow-wrap: break-word; 
 }
 
-/* Tamaño de Iconos de Contacto */
 .contact-card .fas, .contact-card .fab {
     font-size: 1.8em; 
     min-width: 1.2em; 
 }
 
-/* Asegura que el texto en las tarjetas se envuelva */
 .contact-card p, .contact-card h6 {
     white-space: normal; 
 }
 
-/* Alineación de botones de Contacto */
 .btn-contact-action {
     flex-shrink: 0; 
     margin-left: 10px; 
 }
 
-/* Padding de las tarjetas */
 .card-body {
-    padding: 15px; 
+    padding: 24px; 
+}
+
+/* Glassmorphic Cards (Proyectos) */
+.glass-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.5);
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--card-border-hover) !important;
+    box-shadow: 0 20px 40px -15px rgba(0, 198, 255, 0.12);
+}
+
+.glass-card .card-title {
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.glass-card:hover .card-title {
+    color: var(--primary) !important;
+}
+
+/* Tech Badges */
+.tech-badge {
+    background: rgba(0, 198, 255, 0.08) !important;
+    color: var(--primary) !important;
+    border: 1px solid rgba(0, 198, 255, 0.12) !important;
+    border-radius: 30px !important;
+    padding: 4px 12px !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease;
+    font-family: var(--font-mono);
+}
+
+.tech-badge:hover {
+    background: rgba(0, 198, 255, 0.15) !important;
+    border-color: rgba(0, 198, 255, 0.25) !important;
+}
+
+/* Experience List & Cards */
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.experience-list:hover .experience-card:not(:hover) {
+    opacity: 0.45;
+}
+
+.experience-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+}
+
+.experience-card:hover {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.3);
+}
+
+/* Contact Social Cards */
+.contact-glass-card {
+    text-decoration: none !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3) !important;
+}
+
+.contact-glass-card h5 {
+    color: var(--text-primary) !important;
+    transition: color 0.3s ease;
+}
+
+.contact-glass-card small {
+    color: var(--text-secondary) !important;
+}
+
+.contact-glass-card i {
+    color: var(--text-muted);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Brand Specific Hovers */
+.contact-glass-card.card-gmail:hover {
+    border-color: rgba(250, 80, 59, 0.4) !important;
+    background: rgba(250, 80, 59, 0.06) !important;
+    box-shadow: 0 12px 30px -10px rgba(250, 80, 59, 0.2) !important;
+    transform: translateY(-4px) scale(1.02);
+}
+.contact-glass-card.card-gmail:hover i {
+    color: #FA503B !important;
+}
+
+.contact-glass-card.card-github:hover {
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 12px 30px -10px rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-4px) scale(1.02);
+}
+.contact-glass-card.card-github:hover i {
+    color: #ffffff !important;
+}
+
+.contact-glass-card.card-linkedin:hover {
+    border-color: rgba(0, 119, 181, 0.4) !important;
+    background: rgba(0, 119, 181, 0.06) !important;
+    box-shadow: 0 12px 30px -10px rgba(0, 119, 181, 0.2) !important;
+    transform: translateY(-4px) scale(1.02);
+}
+.contact-glass-card.card-linkedin:hover i {
+    color: #0077B5 !important;
+}
+
+.contact-glass-card.card-whatsapp:hover {
+    border-color: rgba(37, 211, 102, 0.4) !important;
+    background: rgba(37, 211, 102, 0.06) !important;
+    box-shadow: 0 12px 30px -10px rgba(37, 211, 102, 0.2) !important;
+    transform: translateY(-4px) scale(1.02);
+}
+.contact-glass-card.card-whatsapp:hover i {
+    color: #25D366 !important;
+}
+
+/* Custom Input Fields */
+.custom-input {
+    background: rgba(15, 23, 42, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.custom-input::placeholder {
+    color: var(--text-muted) !important;
+}
+
+.custom-input:focus {
+    background: rgba(15, 23, 42, 0.7) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 12px var(--primary-glow) !important;
+    outline: none !important;
+}
+
+.btn-gradient {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    box-shadow: 0 4px 14px rgba(0, 198, 255, 0.3) !important;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4) !important;
+    background: var(--primary-gradient-hover) !important;
 }
 
 
@@ -132,7 +385,6 @@ code, .text-monospace {
   5. REGLAS DE ACCESIBILIDAD Y RESPONSIVIDAD
 ==================================*/
 
-/* Quitar el outline del foco inicial */
 :focus {
     outline: none !important;
 }
@@ -140,24 +392,62 @@ code, .text-monospace {
     outline: none !important;
 }
 
-/* Outline/Shadow para la accesibilidad del teclado (si no es el primer elemento) */
 button:focus,
 a:focus {
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(0, 198, 255, 0.25);
     outline: none !important;
 }
 
 /* Reglas del Sidebar Fijo (Solo en Desktop) */
-
-@media (min-width: 992px) { /* Aplica solo a partir del breakpoint 'lg' */
+@media (min-width: 992px) { 
     .sidebar-sticky-left {
         position: fixed; 
         height: 100vh; 
     }
 }
-@media (max-width: 991px) { /* Para pantallas más pequeñas */
+@media (max-width: 991px) { 
     .sidebar-sticky-left {
-        position: static; /* Deshace el fixed y permite que se desplace */
+        position: static; 
         height: auto;
     }
+}
+
+.footer {
+    background-color: #05060a !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 2;
+}
+
+/*================================
+  6. ANIMACIONES DE ENTRADA
+==================================*/
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; opacity: 0; }
+.delay-2 { animation-delay: 0.25s; opacity: 0; }
+.delay-3 { animation-delay: 0.4s; opacity: 0; }
+.delay-4 { animation-delay: 0.55s; opacity: 0; }
+
+/* Validation Messages Styling */
+.validation-message {
+    color: #ef4444 !important;
+    font-size: 0.825rem;
+    margin-top: 0.25rem;
+    display: block;
+    font-family: var(--font-sans);
 }

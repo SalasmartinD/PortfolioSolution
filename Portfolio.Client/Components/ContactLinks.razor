@@ -1,77 +1,57 @@
-@* 📄 Portfolio.Client/Components/ContactLinks.razor *@
-
-<div class="card contact-section-card border-0 p-3">
-    <div class="card-body">
+<div class="card bg-transparent border-0 p-0">
+    <div class="card-body p-0">
         
-        <h3 class="fs-4 fw-bold mb-3 text-info">
-            <i class="fas fa-phone-alt me-2"></i> Conectemos @* ICONO DE TELÉFONO *@
+        <h3 class="fs-4 fw-bold mb-3 text-primary">
+            <i class="fas fa-phone-alt me-2"></i> Conectemos
         </h3>
         <p class="text-muted small">¿Tienes un proyecto en mente? ¡Me encantaría escuchar sobre tus ideas!</p>
         
         <div class="d-grid gap-3 mt-4">
 
             <a href="mailto:salasmartindaniel0@gmail.com" target="_blank" 
-               class="card contact-card text-white p-3 border-0" 
-               style="background-color: #FA503B;">
+               class="contact-glass-card card-gmail p-3">
                 <div class="d-flex align-items-center">
                     <div class="me-auto" style="min-width: 0;">
-                        <h5 class="mb-0 fw-bold">Gmail</h5>
-                        <small class="text-white-50 ">salasmartindaniel0@gmail.com</small>
+                        <h5 class="mb-1 fw-bold">Gmail</h5>
+                        <small>salasmartindaniel0@gmail.com</small>
                     </div>
-                    <i class="fas fa-envelope fs-3"></i> @* ICONO DE GMAIL *@
+                    <i class="fas fa-envelope fs-3"></i>
                 </div>
             </a>
             
             <a href="https://github.com/SalasmartinD" target="_blank" 
-               class="card contact-card text-white p-3 border-0" 
-               style="background-color: #333333;">
+               class="contact-glass-card card-github p-3">
                 <div class="d-flex align-items-center">
                     <div class="me-auto" style="min-width: 0;">
-                        <h5 class="mb-0 fw-bold">GitHub</h5>
-                        <small class="text-white-50">SalasmartinD</small>
+                        <h5 class="mb-1 fw-bold">GitHub</h5>
+                        <small>SalasmartinD</small>
                     </div>
-                    <i class="fab fa-github fs-3"></i> @* ICONO DE GITHUB *@
+                    <i class="fab fa-github fs-3"></i>
                 </div>
             </a>
 
             <a href="https://www.linkedin.com/in/martíndanielsalas" target="_blank" 
-               class="card contact-card text-white p-3 border-0" 
-               style="background-color: #0077B5;">
+               class="contact-glass-card card-linkedin p-3">
                 <div class="d-flex align-items-center">
                     <div class="me-auto" style="min-width: 0;">
-                        <h5 class="mb-0 fw-bold">LinkedIn</h5>
-                        <small class="text-white-50">Salas Martín Daniel</small>
+                        <h5 class="mb-1 fw-bold">LinkedIn</h5>
+                        <small>Salas Martín Daniel</small>
                     </div>
-                    <i class="fas fa-briefcase fs-3"></i> @* ICONO DE LINKEDIN *@
+                    <i class="fab fa-linkedin fs-3"></i>
                 </div>
             </a>
 
             <a href="https://wa.me/5491127646848" target="_blank" 
-               class="card contact-card text-white p-3 border-0" 
-               style="background-color: #25D366;">
+               class="contact-glass-card card-whatsapp p-3">
                 <div class="d-flex align-items-center">
                     <div class="me-auto" style="min-width: 0;">
-                        <h5 class="mb-0 fw-bold">WhatsApp</h5>
-                        <small class="text-white-50">+54 91127646848</small>
+                        <h5 class="mb-1 fw-bold">WhatsApp</h5>
+                        <small>+54 91127646848</small>
                     </div>
-                    <i class="fab fa-whatsapp fs-3"></i> @* ICONO DE WHATSAPP *@
+                    <i class="fab fa-whatsapp fs-3"></i>
                 </div>
             </a>
 
         </div>
     </div>
 </div>
-<style>
-    /* Estilo para las tarjetas de contacto */
-    .contact-card {
-        text-decoration: none;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .contact-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    }
-    .contact-card .fs-3 {
-        opacity: 0.8;
-    }
-</style>
