@@ -1,21 +1,44 @@
 @page "/projects"
 @using Portfolio.Shared.Models 
 @using Portfolio.Client.Components
-@inject HttpClient Http 
+@using Portfolio.Client.Services
+@inject ProjectService ProjectService 
 
 <div class="container py-5">
-    <h3 class="display-5 fw-bold mb- border-bottom pb-2 text-primary">
+    <h3 class="display-5 fw-bold mb-4 border-bottom pb-2 text-primary">
         <i class="fas fa-code me-2"></i> Mis Proyectos Destacados
     </h3>
     <p class="lead text-muted">
-        Estos proyectos demuestran mi experiencia en el desarrollo de aplicaciones robustas implementando buenas practicas.
+        Estos proyectos demuestran mi experiencia en el desarrollo de aplicaciones robustas implementando buenas prácticas.
     </p>
     
-    @if (projects == null)
+    @if (isLoading)
     {
-        <p class="lead text-muted">
-        Cargando proyectos...
-        </p>
+        <div class="d-flex flex-column align-items-center justify-content-center my-5 py-5">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="lead text-muted mt-3">Cargando proyectos desde Supabase...</p>
+        </div>
+    }
+    else if (errorMessage != null)
+    {
+        <div class="alert alert-danger my-5 p-4 border-0 shadow-sm" role="alert">
+            <h4 class="alert-heading fw-bold"><i class="fas fa-exclamation-triangle me-2"></i> Error al cargar proyectos</h4>
+            <p class="mb-3">Hubo un problema al intentar conectar con la base de datos de Supabase. Por favor, verifica la configuración de conexión o reintenta.</p>
+            <hr>
+            <p class="mb-3 text-monospace small text-dark">Detalle técnico: @errorMessage</p>
+            <button class="btn btn-danger btn-sm px-4" @onclick="LoadProjectsAsync">
+                <i class="fas fa-sync me-1"></i> Intentar de nuevo
+            </button>
+        </div>
+    }
+    else if (projects == null || !projects.Any())
+    {
+        <div class="text-center my-5 py-5">
+            <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+            <p class="lead text-muted">No se encontraron proyectos registrados en este momento.</p>
+        </div>
     }
     else
     {
@@ -29,92 +52,32 @@
 </div>
 
 @code {
-    //private List<Project>? projects;
+    private List<Project>? projects;
+    private bool isLoading = true;
+    private string? errorMessage;
 
-    private List<Project> projects = new List<Project>
-    {
-        new Project 
-        { 
-            Id = 1, 
-            Title = "LubriManager (En Proceso)", 
-            ShortDescription = "Software de gestión empresarial para lubricentros. Incluye control de stock, gestión de ventas, pedidos a proveedores y cálculo automatizado de ganancias. Arquitectura robusta enfocada en la integridad de datos.", 
-            Technologies = "C#, .NET, WPF, MVVM, SQL Server",
-            GitHubUrl = "",
-            LiveDemoUrl = ""
-        },
-        new Project 
-        { 
-            Id = 2, 
-            Title = "Buscaminas C/SDL2", 
-            ShortDescription = "Recreación del clásico juego utilizando lenguaje C puro. Implementación de algoritmos de recursividad para el despeje de celdas y manejo de texturas y fuentes con la librería SDL2.", 
-            Technologies = "C, SDL2, SDL_ttf, Algoritmos",
-            GitHubUrl = "https://github.com/SalasmartinD/Buscaminas",
-            LiveDemoUrl = ""
-        },
-        new Project 
-        { 
-            Id = 3, 
-            Title = "Portafolio Médico", 
-            ShortDescription = "Sitio web profesional desarrollado para una estudiante de medicina. Enfocado en la presentación de trayectoria académica y blog de artículos científicos.", 
-            Technologies = "C#, Blazor WebAssembly, Bootstrap, ASP.NET Core",
-            GitHubUrl = "https://portfolio-mar-seven.vercel.app",
-            LiveDemoUrl = "https://portfolio-mar-seven.vercel.app" // Cambialo si tenés el link
-        },
-        new Project 
-        { 
-            Id = 4, 
-            Title = "Full-Stack Portfolio", 
-            ShortDescription = "Mi portafolio actual. Una SPA que demuestra la integración de Blazor con una API de .NET, despliegue automatizado y manejo de servicios externos como SendGrid.", 
-            Technologies = "Blazor WASM, .NET API, Docker, Vercel, Render",
-            GitHubUrl = "https://github.com/SalasmartinD/PortfolioSolution",
-            LiveDemoUrl = "https://portfolio-solution-85fm.vercel.app"
-        },
-        new Project 
-        { 
-            Id = 6, 
-            Title = "Catalog API (En Proceso)", 
-            ShortDescription = "API RESTful desarrollada con una arquitectura orientada a microservicios, enfocada en la gestión de catálogos de productos con alta disponibilidad.", 
-            Technologies = "ASP.NET Core, MongoDB, Docker",
-            GitHubUrl = "",
-            LiveDemoUrl = "" 
-        },
-        new Project 
-        { 
-            Id = 7, 
-            Title = "BielaSystems", 
-            ShortDescription = "Plataforma web corporativa que centraliza servicios de consultoría y desarrollo de software a medida.", 
-            Technologies = ".NET 10, Blazor, JavaScript, C#",
-            GitHubUrl = "",
-            LiveDemoUrl = "bielasystems.com" 
-        },
-        new Project 
-        { 
-            Id = 8, 
-            Title = "RPManager", 
-            ShortDescription = "Sistema integral de gestión empresarial desarrollado en .NET con arquitectura modular. RPManager centraliza y automatiza procesos críticos como la administración de empleados, control de proveedores y flujo de pagos. Destaca por su integración con Inteligencia Artificial para optimizar la toma de decisiones y la gestión del negocio", 
-            Technologies = ".NET 10, Blazor, C#, PostgreSQL, Docker, LinuxServer",
-            GitHubUrl = "",
-            LiveDemoUrl = "" 
-        },
-        
-    };
-
-    /* Método que se ejecuta al iniciar el componente
     protected override async Task OnInitializedAsync()
     {
+        await LoadProjectsAsync();
+    }
+
+    private async Task LoadProjectsAsync()
+    {
+        isLoading = true;
+        errorMessage = null;
+
         try
         {
-            // La URL DEBE COINCIDIR con el puerto en el que corre Portfolio.Api
-            var apiUrl = "https://portfoliosolution.onrender.com/api/Projects";
-            //var apiUrl = "https://localhost:7208/api/Projects";
-            projects = await Http.GetFromJsonAsync<List<Project>>(apiUrl);
+            projects = await ProjectService.GetProjectsAsync();
         }
         catch (Exception ex)
         {
-            // Manejo de errores
+            errorMessage = ex.Message;
             Console.WriteLine($"Error al obtener proyectos: {ex.Message}");
-            projects = new List<Project>(); // Inicializar vacío para evitar el error de Nulo
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
-    */
 }

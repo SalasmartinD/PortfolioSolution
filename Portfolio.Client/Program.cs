@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Portfolio.Client;
+using Portfolio.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -11,5 +12,8 @@ builder.Services.AddScoped(sp => new HttpClient {
     // La URL de la API se definirá en el componente ProjectsList.razor.
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
 });
+
+// Registrar el servicio de proyectos para consumo con Supabase
+builder.Services.AddScoped<ProjectService>();
 
 await builder.Build().RunAsync();
