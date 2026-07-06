@@ -1,8 +1,10 @@
 #!/bin/bash
 echo "--- INICIANDO INSTALACION .NET ---"
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 10.0 --install-dir .dotnet
+curl -sSL -o dotnet-install.sh https://dot.net/v1/dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh --channel 10.0 --install-dir .dotnet
 export DOTNET_ROOT=$(pwd)/.dotnet
-export PATH=$PATH:$DOTNET_ROOT
+export PATH=$DOTNET_ROOT:$PATH
 
 echo "--- PUBLICANDO PROYECTO ---"
 dotnet publish Portfolio.Client/Portfolio.Client.csproj -c Release -o output
