@@ -23,6 +23,12 @@
         </div>
         
         <div class="card-footer bg-transparent border-0 d-grid gap-2 px-4 pb-4 pt-0">
+            @if (!string.IsNullOrWhiteSpace(Project.LiveDemoUrl))
+            {
+                <a href="@Project.LiveDemoUrl" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-external-link-alt me-2"></i> Demo en Vivo
+                </a>
+            }
             @if (!string.IsNullOrWhiteSpace(Project.GitHubUrl))
             {
                 <a href="@Project.GitHubUrl" target="_blank" class="btn btn-sm btn-gradient text-white">
