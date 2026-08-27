@@ -1,42 +1,51 @@
-# 🌐 Portafolio Personal Full-Stack C# / Blazor WebAssembly
+# 🌐 Portafolio Personal — React / TypeScript / Next.js
 
-[![Deployment Status](https://img.shields.io/badge/Status-Deploy%20Exitoso-brightgreen)](https://TU-PROYECTO.vercel.app)
-[![API Backend](https://img.shields.io/badge/Backend-Render%20Live-blueviolet)](https://TU-API-RENDER.onrender.com/ping)
-[![Tecnología Principal](https://img.shields.io/badge/Framework-ASP.NET%20Core%2010.0-9400D3)]()
+## 📝 Visión General
 
-## 📝 Visión General del Proyecto
+Portafolio personal migrado de C#/Blazor a un stack moderno de React, pensado para desplegarse
+íntegramente en Vercel (frontend + funciones serverless), sin backend separado.
 
-Este repositorio contiene la arquitectura completa de mi portafolio web personal, diseñado para demostrar mi dominio del **Stack C#/.NET** en un entorno de producción real.
-
-El proyecto está diseñado con una arquitectura de "Despliegue Dividido" (Split Deployment) que separa el cliente estático de la API de backend, replicando un entorno de microservicios real.
-
----
-
-## 🎯 Tecnologías Clave
+## 🎯 Stack
 
 | Capa | Tecnología | Propósito |
 | :--- | :--- | :--- |
-| **Frontend (Client)** | **Blazor WebAssembly (WASM)** | Single Page Application (SPA) para la interfaz. Carga el runtime de .NET directamente en el navegador. |
-| **Backend (API)** | **ASP.NET Core Web API** | Servicio RESTful para manejar solicitudes de datos de proyectos y la lógica de contacto. |
-| **Persistencia** | **PostgreSQL + Entity Framework Core** | Base de datos relacional robusta. EF Core gestiona las migraciones y consultas de datos. |
-| **DevOps/Hosting** | **Vercel & Render** | Vercel aloja el cliente estático (WASM). Render aloja el servidor de la API y la base de datos (Full-Stack Free Tier). |
-| **Servicios** | **SendGrid** | Envío de emails transaccionales para el formulario de contacto (solución robusta anti-spam y anti-bloqueo). |
+| **Framework** | **Next.js (App Router) + TypeScript** | SSR/SSG, rutas de API serverless y frontend en un solo proyecto. |
+| **Estilos** | **Tailwind CSS v4** | Sistema de diseño oscuro con glassmorphism, sin dependencias de Bootstrap. |
+| **Datos** | **Supabase (PostgreSQL)** | Los proyectos se consultan server-side con `@supabase/supabase-js`. |
+| **Contacto** | **Resend** | Envío del formulario de contacto vía una Route Handler (`/api/contact`). |
+| **Formularios** | **react-hook-form + zod** | Validación tipada del formulario de contacto. |
+| **Hosting** | **Vercel** | Único proveedor: frontend estático/SSR + funciones serverless. |
 
----
+## 🏗️ Estructura
 
-## ✨ Funcionalidades y Patrones Demostrados
+```
+src/
+  app/            # App Router: layout, page y la API route de contacto
+  components/     # Componentes de UI (Sidebar, secciones, formulario, etc.)
+  data/           # Contenido tipado (perfil, experiencia)
+  lib/            # Cliente de Supabase y schema de validación
+  types/          # Tipos compartidos (Project)
+```
 
-* **API Orientada a Datos:** El `ProjectsController` consulta datos persistentes de PostgreSQL.
-* **Formulario Funcional:** `ContactController` recibe datos y los envía al correo electrónico a través de la API de SendGrid (sin usar SMTP directamente).
-* **Arquitectura:** Separación estricta de la UI (Blazor) y la lógica de negocio (API).
-* **Diseño Responsivo:** UI inspirada en el estilo minimalista de Brittany Chiang, optimizada para Desktop y Móvil.
+## ⚙️ Variables de entorno
 
----
+Copiá `.env.example` a `.env.local` y completá:
 
-## 🏗️ Estructura de la Solución
+- `SUPABASE_URL` / `SUPABASE_ANON_KEY`: proyecto de Supabase (tabla `projects`).
+- `RESEND_API_KEY`: API key de [resend.com](https://resend.com) para enviar el mail de contacto.
+- `CONTACT_TO_EMAIL`: dirección que recibe los mensajes del formulario.
+- `CONTACT_FROM_EMAIL`: remitente. Usá `onboarding@resend.dev` hasta verificar un dominio propio en Resend.
 
-El proyecto está organizado en una solución de múltiples proyectos:
+Estas mismas variables hay que cargarlas en el proyecto de Vercel (Settings → Environment Variables).
 
-1.  **`Portfolio.Client`**: La aplicación Blazor WebAssembly.
-2.  **`Portfolio.Api`**: El servidor de la API y el host de Kestrel (ejecutado en Docker/Render).
-3.  **`Portfolio.Shared`**: Modelos y DTOs (Data Transfer Objects) compartidos entre el cliente y el servidor.
+## 🚀 Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+## 📦 Deploy
+
+Conectar el repo a Vercel (framework preset: Next.js) y cargar las variables de entorno. No requiere
+ningún otro servicio de hosting.
